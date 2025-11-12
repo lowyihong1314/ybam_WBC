@@ -1,7 +1,8 @@
 # function/__init__.py
-from flask import Flask, render_template
+from flask import Flask, render_template,send_file
 from flask_socketio import SocketIO, send
 from function.wbc import wbc_bp
+import os
 
 socketio = SocketIO()
 
@@ -15,7 +16,12 @@ def create_app():
     # 注册普通路由
     @app.route('/')
     def index():
-        return render_template('index.html')
+        file_path = os.path.join('static', 'templates', 'index.html')
+        return send_file(file_path)
+    
+    @app.route('/favicon.ico')
+    def icon():
+        return send_file('static/images/logo/YBAM_logo.ico')
 
     @app.route('/register_data')
     def register_data():
