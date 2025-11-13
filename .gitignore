@@ -9,6 +9,7 @@ ENV/
 __pycache__/
 *.py[cod]
 *.pyo
+password.py
 
 # Tools caches
 .pytest_cache/

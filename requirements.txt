@@ -3,3 +3,5 @@ flask-socketio
 pandas
 eventlet
 gunicorn
+flask_sqlalchemy
+pymysql

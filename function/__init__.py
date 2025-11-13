@@ -3,13 +3,17 @@ from flask import Flask, render_template,send_file
 from flask_socketio import SocketIO, send
 from function.wbc import wbc_bp
 import os
+from models import db
+from password import sql_username,sql_password,secret_key
 
 socketio = SocketIO()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'secret!'
-
+    app.config['SECRET_KEY'] = secret_key
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{sql_username}:{sql_password}@127.0.0.1/YBAM'
+    
+    db.init_app(app)
     # 注册蓝图
     app.register_blueprint(wbc_bp, url_prefix='/wbc')
 
@@ -37,3 +41,4 @@ def create_app():
     socketio.init_app(app)
 
     return app
+
