@@ -27,3 +27,6 @@ dist/
 *.sqlite3
 .DS_Store
 *.swp
+
+# uploads
+uploads/

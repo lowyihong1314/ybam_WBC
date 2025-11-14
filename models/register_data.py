@@ -19,9 +19,11 @@ class RegisterData(db.Model):
     payment_amount = db.Column(db.Numeric(10, 2))
     payment_doc = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    deleted = db.Column(db.Boolean, default=False, nullable=False)  # ✅ 新字段
 
-    # ✅ 可选：返回字典格式（前端 JSON 用）
     def to_dict(self):
+        if self.deleted:
+            return {}
         return {
             "id": self.id,
             "doc_no": self.doc_no,
