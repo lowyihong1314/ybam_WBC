@@ -1,11 +1,13 @@
 # models/register_data.py
 from models import db
 from datetime import datetime
+import json
 
 class RegisterData(db.Model):
     __tablename__ = 'register_data'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
+
     doc_no = db.Column(db.String(50), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     name_cn = db.Column(db.String(100))
@@ -16,14 +18,27 @@ class RegisterData(db.Model):
     medical_information = db.Column(db.Text)
     emergency_contact = db.Column(db.String(255))
     doc_type = db.Column(db.String(50))
-    payment_amount = db.Column(db.Numeric(10, 2))
+
+    payment_amount = db.Column(db.Float)
+    payment_amount_myr = db.Column(db.Float)
+    payment_currency = db.Column(db.String(10))
+
+    paper_presentation = db.Column(db.Boolean, default=False)
+    paper_files = db.Column(db.Text)
     payment_doc = db.Column(db.String(255))
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    deleted = db.Column(db.Boolean, default=False, nullable=False)  # ✅ 新字段
+    deleted = db.Column(db.Boolean, default=False)
+
+    # ----------- 关系 ------------
+    transactions = db.relationship(
+        "PaymentTransaction",
+        backref="register",
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
 
     def to_dict(self):
-        if self.deleted:
-            return {}
         return {
             "id": self.id,
             "doc_no": self.doc_no,
@@ -36,7 +51,37 @@ class RegisterData(db.Model):
             "medical_information": self.medical_information,
             "emergency_contact": self.emergency_contact,
             "doc_type": self.doc_type,
-            "payment_amount": float(self.payment_amount or 0),
+
+            "payment_amount": self.payment_amount,
+            "payment_amount_myr": self.payment_amount_myr,
+            "payment_currency": self.payment_currency,
+
+            "paper_presentation": self.paper_presentation,
+            "paper_files": json.loads(self.paper_files) if self.paper_files else [],
             "payment_doc": self.payment_doc,
-            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S") if self.created_at else None
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+
+            # 👍 自动返回 Transaction 历史
+            "payment_transactions": [t.to_dict() for t in self.transactions]
+        }
+
+
+class PaymentTransaction(db.Model):
+    __tablename__ = 'payment_transaction'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    register_id = db.Column(db.Integer, db.ForeignKey('register_data.id'), nullable=False)
+    bill_id = db.Column(db.String(100))
+    paid = db.Column(db.Boolean, default=False)
+    raw_json = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "register_id": self.register_id,
+            "bill_id": self.bill_id,
+            "paid": self.paid,
+            "raw_json": json.loads(self.raw_json) if self.raw_json else None,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S")
         }

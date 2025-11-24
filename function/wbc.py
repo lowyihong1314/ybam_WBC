@@ -5,8 +5,9 @@ from models.register_data import RegisterData
 import secrets
 import time
 from password import MASTER_TOKEN
-import os
+import os,json
 from function.config import flask_path
+from function.socket_init import socketio
 
 from werkzeug.utils import secure_filename
 
@@ -16,30 +17,29 @@ ACTIVE_SESSIONS = {}
 
 SESSION_EXPIRE_TIME = 60 * 60 * 4  # 会话有效期 4 小时
 
+@wbc_bp.route("/rate")
+def rate():
+    import requests
+    r = requests.get("https://sim-ray.com/ocr/get_new_rate")
+    return jsonify(r.json())
+
 @wbc_bp.route("/login_with_token", methods=["POST"])
 def login_with_token():
     data = request.get_json()
     token = data.get("token") if data else None
 
-    if not token:
-        return jsonify({"success": False, "error": "缺少 token"}), 400
-
     if token != MASTER_TOKEN:
-        return jsonify({"success": False, "error": "无效 token"}), 403
+        return jsonify({
+            "success": False,
+            "error": "无效 token",
+            "error_type": "invalid_token"
+        }), 403
 
-    # 生成随机 session token
-    session_token = secrets.token_hex(32)
-    now = time.time()
-
-    ACTIVE_SESSIONS[session_token] = {
-        "created": now,
-        "expires": now + SESSION_EXPIRE_TIME
-    }
-
+    # 所有用户房间就是 MASTER_TOKEN
     return jsonify({
         "success": True,
-        "session_token": session_token,
-        "expires_in": SESSION_EXPIRE_TIME
+        "session_token": MASTER_TOKEN,
+        "room": MASTER_TOKEN
     })
 
 def session_required(f):
@@ -48,30 +48,13 @@ def session_required(f):
         token = request.headers.get("Authorization") or request.args.get("token")
 
         if not token:
-            return jsonify({
-                "success": False,
-                "error": "缺少 token",
-                "error_type": "missing_token"  # 🔹 前端可识别类型
-            }), 401
+            return jsonify({"success": False, "error": "缺少 token","error_type":"missing_token"}), 401
 
         if token.startswith("Bearer "):
             token = token.replace("Bearer ", "").strip()
 
-        session_info = ACTIVE_SESSIONS.get(token)
-        if not session_info:
-            return jsonify({
-                "success": False,
-                "error": "无效或已过期 session",
-                "error_type": "invalid_token"  # 🔹 无效或不存在
-            }), 403
-
-        if session_info["expires"] < time.time():
-            del ACTIVE_SESSIONS[token]
-            return jsonify({
-                "success": False,
-                "error": "session 已过期，请重新登录",
-                "error_type": "expired_session"  # 🔹 已过期
-            }), 403
+        if token != MASTER_TOKEN:
+            return jsonify({"success": False, "error": "缺少 token","error_type":"invalid_token"}), 403
 
         return f(*args, **kwargs)
 
@@ -85,6 +68,7 @@ def get_all_register_data():
         return jsonify({
             "success": True,
             "count": len(records),
+            "room": MASTER_TOKEN,
             "data": [r.to_dict() for r in records]
         })
     except Exception as e:
@@ -172,25 +156,47 @@ def get_register_data_img(record_id):
 @wbc_bp.route("/register", methods=["POST"])
 def register():
     try:
-        # 1. 接收普通字段
         form = request.form
-        
-        # 2. 接收文件字段
-        file = request.files.get("payment_doc")
 
-        saved_file_path = None
+        # =============================
+        # 支付字段 — 来自 hidden input
+        # =============================
+        payment_amount = form.get("payment_amount")
+        payment_currency = form.get("payment_currency")
+        payment_amount_myr = form.get("payment_amount_myr")
 
-        if file:
-            # 3. 确保上传目录存在
-            upload_dir = os.path.join(flask_path, "uploads")
+        try:
+            payment_amount = float(payment_amount)
+        except:
+            payment_amount = None
+
+        try:
+            payment_amount_myr = float(payment_amount_myr)
+        except:
+            payment_amount_myr = None
+
+        # =============================
+        # 是否投稿
+        # =============================
+        paper_present = form.get("paper_presentation") == "true"
+
+        # =============================
+        # 保存 payment_doc
+        # =============================
+        payment_file = request.files.get("payment_doc")
+        payment_doc_filename = None
+
+        if payment_file:
+            upload_dir = os.path.join(flask_path, "uploads", "payments")
             os.makedirs(upload_dir, exist_ok=True)
 
-            # 4. 保存文件
-            filename = secure_filename(file.filename)
-            saved_file_path = os.path.join(upload_dir, filename)
-            file.save(saved_file_path)
+            payment_doc_filename = secure_filename(payment_file.filename)
+            save_path = os.path.join(upload_dir, payment_doc_filename)
+            payment_file.save(save_path)
 
-        # 5. 创建数据库记录
+        # =============================
+        # 写入数据库
+        # =============================
         new_record = RegisterData(
             doc_no=form.get("doc_no"),
             name=form.get("name"),
@@ -202,19 +208,66 @@ def register():
             medical_information=form.get("medical_information"),
             emergency_contact=form.get("emergency_contact"),
             doc_type=form.get("doc_type"),
-            payment_amount=form.get("payment_amount"),
-            payment_doc=saved_file_path  # 保存文件路径到数据库
+
+            payment_amount=payment_amount,
+            payment_amount_myr=payment_amount_myr,
+            payment_currency=payment_currency,
+
+            paper_presentation=paper_present,
+            payment_doc=payment_doc_filename     # ⭐只存文件名！
         )
 
         db.session.add(new_record)
         db.session.commit()
+        register_id = new_record.id
+
+        # =============================
+        # 保存 paper PDF 文件
+        # =============================
+        if paper_present:
+            paper_files = request.files.getlist("paper_files")
+
+            paper_dir = os.path.join(flask_path, "uploads", "papers", str(register_id))
+            os.makedirs(paper_dir, exist_ok=True)
+
+            saved_names = []
+
+            for f in paper_files:
+                fname = secure_filename(f.filename)
+                save_path = os.path.join(paper_dir, fname)
+                f.save(save_path)
+
+                # ⭐ 只存文件名
+                saved_names.append(fname)
+
+            new_record.paper_files = json.dumps(saved_names)
+            db.session.commit()
+
+        socketio.emit("register_update", new_record.to_dict(), room=MASTER_TOKEN)
 
         return jsonify({
             "success": True,
-            "message": "报名资料已写入数据库",
+            "message": "报名数据已写入数据库",
             "data": new_record.to_dict()
         })
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"success": False, "error": str(e)}), 500
+
+@wbc_bp.route("/get_paper_file")
+def get_paper_file():
+    register_id = request.args.get("id")
+    filename = request.args.get("filename")
+
+    if not register_id or not filename:
+        return "Missing id or filename", 400
+
+    file_path = os.path.join(
+        flask_path, "uploads", "papers", str(register_id), filename
+    )
+
+    if not os.path.exists(file_path):
+        return "File not found", 404
+
+    return send_file(file_path, as_attachment=True)

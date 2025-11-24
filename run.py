@@ -1,4 +1,8 @@
 # run.py
+
+import eventlet
+eventlet.monkey_patch()
+
 from function import create_app, socketio
 
 app = create_app()
@@ -11,8 +15,10 @@ if __name__ == '__main__':
 # python3 -m venv venv
 # source venv/bin/activate
 # pip install -r requirements.txt
-# sudo systemctl start ybam.service
+# sudo systemctl restart ybam.service
 
 # git add .
-# git commit -m "更新: 修复 send_file 路由"
+# git commit -m "更新: 上传图片的逻辑，查看 register_data 的方法"
 # git push -u origin main --force
+
+# gunicorn -k eventlet -w 4 run:app --bind 0.0.0.0:5018

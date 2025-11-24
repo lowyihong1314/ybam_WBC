@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="zh">
+ <head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/static/images/logo/YBAM_logo.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YBAM - 马来西亚佛教青年总会</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #a8e6cf 0%, #87ceeb 100%);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-section img {
+            height: 57px;
+            width: auto;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #2c5f2d;
+            font-weight: 500;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #2c5f2d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover {
+            color: #1a472a;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #d4f1e8 0%, #b8e6f5 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #2c5f2d;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #4a7c59;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: #2c5f2d;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 3rem;
+            text-align: justify;
+        }
+
+        /* Mission Cards */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .mission-card {
+            background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .mission-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-card h3 {
+            font-size: 1.5rem;
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+        }
+
+        .mission-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #a8e6cf 0%, #87ceeb 100%);
+            padding: 4rem 2rem;
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Social Links */
+        .social-section {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .social-section h2 {
+            font-size: 2rem;
+            color: #2c5f2d;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #2c5f2d;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a472a 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <header>
+   <div class="header-content">
+    <div class="logo-section"><img src="https://ybam-wordpress-media.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2024/05/03162711/ybamlogo2.png" alt="YBAM Logo" onerror="this.src=''; this.alt='Logo failed to load'; this.style.display='none';"> <span class="tagline" id="tagline">智慧 · 慈悲 · 感恩</span>
+    </div>
+    <nav><a href="#about">关于我们</a><a href="/static/templates/WBC.html">世界佛教大会</a><a href="/static/templates/register.html">马上报名</a> <a href="#contact">联系我们</a>
+    </nav>
+   </div>
+  </header>
+  <section class="hero">
+   <div class="hero-content">
+    <h1 id="hero-title">谢谢</h1>
+   </div>
+  </section>
+  <section class="social-section" id="contact">
+   <h2>关注我们</h2>
+   <div class="social-links"><a href="https://www.facebook.com/YBAMalaysia" target="_blank" rel="noopener noreferrer" class="social-link"> <span class="social-icon">📘</span> <span>Facebook</span> </a> <a href="https://www.youtube.com/c/YBAMalaysia" target="_blank" rel="noopener noreferrer" class="social-link"> <span class="social-icon">📺</span> <span>YouTube</span> </a>
+   </div>
+  </section>
+  <footer>
+   <p id="footer-text">© 2024 马来西亚佛教青年总会 (YBAM). 版权所有.</p>
+   <p>Young Buddhist Association of Malaysia</p>
+  </footer>
+  <script>
+        const defaultConfig = {
+            background_color: "#d4f1e8",
+            surface_color: "#e8f8f5",
+            text_color: "#2c5f2d",
+            primary_action_color: "#5fb88f",
+            secondary_action_color: "#4a9fd8",
+            font_family: "Segoe UI",
+            font_size: 16,
+            site_tagline: "智慧 · 慈悲 · 感恩",
+            hero_title: "马来西亚佛教青年总会",
+            hero_subtitle: "引领马来西亚佛教青年，推广正面生活方式，建设智慧、慈悲与感恩的社会",
+            cta_button: "了解更多",
+            about_title: "关于 YBAM",
+            mission_title: "我们的核心价值",
+            footer_text: "© 2024 马来西亚佛教青年总会 (YBAM). 版权所有."
+        };
+
+        async function onConfigChange(config) {
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
+
+            // Apply colors
+            document.querySelector('.hero').style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${surfaceColor} 100%)`;
+            document.querySelector('.stats').style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+            
+            const missionCards = document.querySelectorAll('.mission-card');
+            missionCards.forEach(card => {
+                card.style.background = `linear-gradient(135deg, ${surfaceColor} 0%, ${backgroundColor} 100%)`;
+            });
+
+            const headers = document.querySelectorAll('h1, h2, h3');
+            headers.forEach(header => {
+                header.style.color = textColor;
+            });
+
+            const ctaButton = document.querySelector('.cta-button');
+            ctaButton.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.style.color = textColor;
+            });
+
+            // Apply fonts
+            const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+            document.body.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+
+            // Apply font sizes
+            document.querySelector('.hero h1').style.fontSize = `${fontSize * 3}px`;
+            document.querySelector('.hero p').style.fontSize = `${fontSize * 1.3}px`;
+            document.querySelectorAll('.about h2').forEach(h2 => {
+                h2.style.fontSize = `${fontSize * 2.5}px`;
+            });
+            document.querySelector('.about-text').style.fontSize = `${fontSize * 1.1}px`;
+            document.querySelectorAll('.mission-card h3').forEach(h3 => {
+                h3.style.fontSize = `${fontSize * 1.5}px`;
+            });
+
+            // Apply text content
+            document.getElementById('tagline').textContent = config.site_tagline || defaultConfig.site_tagline;
+            document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+            document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+            document.getElementById('cta-button').textContent = config.cta_button || defaultConfig.cta_button;
+            document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
+            document.getElementById('mission-title').textContent = config.mission_title || defaultConfig.mission_title;
+            document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["cta_button", config.cta_button || defaultConfig.cta_button],
+                ["about_title", config.about_title || defaultConfig.about_title],
+                ["mission_title", config.mission_title || defaultConfig.mission_title],
+                ["footer_text", config.footer_text || defaultConfig.footer_text]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d1f04f6676fc5d',t:'MTc2MjkwNzYxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

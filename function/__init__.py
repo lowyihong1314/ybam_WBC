@@ -2,11 +2,12 @@
 from flask import Flask, render_template,send_file
 from flask_socketio import SocketIO, send
 from function.wbc import wbc_bp
+from function.guest_and_member import guest_and_member_bp
+from function.payment_gateway import payment_gateway_bp
 import os
 from models import db
 from password import sql_username,sql_password,secret_key
-
-socketio = SocketIO()
+from function.socket_init import socketio
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +17,8 @@ def create_app():
     db.init_app(app)
     # 注册蓝图
     app.register_blueprint(wbc_bp, url_prefix='/wbc')
+    app.register_blueprint(guest_and_member_bp, url_prefix='/guest_and_member')
+    app.register_blueprint(payment_gateway_bp, url_prefix='/payment_gateway')
 
     # 注册普通路由
     @app.route('/')
@@ -29,16 +32,12 @@ def create_app():
 
     @app.route('/register_data')
     def register_data():
-        return render_template('register_data.html')
-
-    # 注册 SocketIO 事件
-    @socketio.on('message')
-    def handle_message(msg):
-        print(f"收到消息: {msg}")
-        send(f"服务器收到: {msg}", broadcast=True)
+        return send_file('static/templates/register_data.html')
 
     # 初始化 socketio
     socketio.init_app(app)
+    import function.socket_event  
+
 
     return app
 

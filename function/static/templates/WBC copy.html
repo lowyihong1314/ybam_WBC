@@ -467,7 +467,7 @@
     </div>
    </div>
   </section>
-    <!-- <section class="speakers-section">
+    <section class="speakers-section">
    <div class="speakers-container">
     <h2 class="speakers-title">主讲嘉宾</h2>
     <p class="speakers-subtitle">我们荣幸邀请到以下杰出的佛教领袖和学者</p>
@@ -524,11 +524,7 @@
      </div>
     </div>
    </div>
-  </section> -->
-  <section class="speakers-section" id="speakers"></section>
-
-<section class="speakers-section" id="conference_members"></section>
-
+  </section>
   <section class="about" id="objectives" style="background: #f8f9fa;">
    <div class="about-content">
     <h2 style="text-align: center; margin-bottom: 3rem;">大会目标</h2>
@@ -858,40 +854,7 @@
             mission_title: "大会主题",
             footer_text: "© 2025 世界佛教大会 | 主办单位：马来西亚佛教青年总会 (YBAM)"
         };
-async function renderSection(sectionId, apiUrl) {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
 
-    // 请求接口数据
-    const res = await fetch(apiUrl);
-    const data = await res.json();
-
-    const title = data.title || "";
-    const subtitle = data.subtitle || "";
-
-    // items：兼容 speakers / members 字段
-    const items = data.speakers || data.members || [];
-
-    // 生成 HTML
-    section.innerHTML = `
-        <div class="speakers-container">
-            <h2 class="speakers-title">${title}</h2>
-            <p class="speakers-subtitle">${subtitle}</p>
-            <div class="speakers-grid">
-                ${items.map(item => `
-                    <div class="speaker-card">
-                        <div class="speaker-avatar">
-                            <div class="avatar-placeholder">👤</div>
-                        </div>
-                        <h3 class="speaker-name">${item.name}</h3>
-                        <p class="speaker-title">${item.title || item.institution || ""}</p>
-                        <p class="speaker-bio">${item.bio || ""}</p>
-                    </div>
-                `).join("")}
-            </div>
-        </div>
-    `;
-}
         async function onConfigChange(config) {
             const backgroundColor = config.background_color || defaultConfig.background_color;
             const surfaceColor = config.surface_color || defaultConfig.surface_color;
@@ -1025,10 +988,6 @@ async function renderSection(sectionId, apiUrl) {
                 mapToEditPanelValues
             });
         }
-        document.addEventListener("DOMContentLoaded", () => {
-    renderSection("speakers", "/guest_and_member/speakers");
-    renderSection("conference_members", "/guest_and_member/conference_members");
-});
     </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d1faaab0142441',t:'MTc2MjkwODAzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
