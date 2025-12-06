@@ -6,14 +6,14 @@ from function.guest_and_member import guest_and_member_bp
 from function.payment_gateway import payment_gateway_bp
 import os
 from models import db
-from password import sql_username,sql_password,secret_key
+from password import secret_key
 from function.socket_init import socketio
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = secret_key
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{sql_username}:{sql_password}@127.0.0.1/YBAM'
-    
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ybam.db'
+
     db.init_app(app)
     # 注册蓝图
     app.register_blueprint(wbc_bp, url_prefix='/wbc')

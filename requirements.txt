@@ -6,3 +6,4 @@ gunicorn
 flask_sqlalchemy
 pymysql
 redis
+requests

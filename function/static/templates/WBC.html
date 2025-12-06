@@ -1,472 +1,522 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
- <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="/static/images/logo/YBAM_logo.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/static/images/logo/YBAM_logo.ico"
+    />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2025年世界佛教大会 - 古老智慧·永续未来</title>
-  <script src="/_sdk/element_sdk.js"></script>
-  <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      2025 World Buddhist Conference - Ancient Wisdom for a Sustainable Future
+    </title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
+    <script src="/_sdk/element_sdk.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        html, body {
-            height: 100%;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+      }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #a8e6cf 0%, #87ceeb 100%);
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+      html,
+      body {
+        height: 100%;
+      }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+      /* Header */
+      header {
+        background: linear-gradient(135deg, #a8e6cf 0%, #87ceeb 100%);
+        padding: 1.5rem 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
 
-        .logo-section img {
-            height: 57px;
-            width: auto;
-        }
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
 
-        .tagline {
-            font-size: 0.9rem;
-            color: #2c5f2d;
-            font-weight: 500;
-        }
+      .logo-section img {
+        height: 57px;
+        width: auto;
+      }
 
-        nav {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
+      .tagline {
+        font-size: 0.9rem;
+        color: #2c5f2d;
+        font-weight: 500;
+      }
 
-        nav a {
-            color: #2c5f2d;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            padding: 0.5rem 0;
-        }
+      nav {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
 
-        nav a:hover {
-            color: #1a472a;
-        }
+      nav a {
+        color: #2c5f2d;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+        padding: 0.5rem 0;
+      }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #d4f1e8 0%, #b8e6f5 100%);
-            padding: 6rem 2rem;
-            text-align: center;
-        }
+      nav a:hover {
+        color: #1a472a;
+      }
 
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #d4f1e8 0%, #b8e6f5 100%);
+        padding: 6rem 2rem;
+        text-align: center;
+      }
 
+      .hero-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        color: #2c5f2d;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        color: #4a7c59;
+        margin-bottom: 2.5rem;
+        line-height: 1.8;
+      }
+
+      .cta-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%);
+        color: white;
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* About Section */
+      .about {
+        padding: 5rem 2rem;
+        background: white;
+      }
+
+      .about-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .about h2 {
+        font-size: 2.5rem;
+        color: #2c5f2d;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .about-text {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.9;
+        margin-bottom: 3rem;
+        text-align: justify;
+      }
+
+      /* Mission Cards */
+      .mission-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .mission-card {
+        background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .mission-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .mission-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .mission-card h3 {
+        font-size: 1.5rem;
+        color: #2c5f2d;
+        margin-bottom: 1rem;
+      }
+
+      .mission-card p {
+        color: #666;
+        line-height: 1.7;
+      }
+
+      /* Speakers Section */
+      .speakers-section {
+        background: white;
+        padding: 5rem 2rem;
+      }
+
+      .speakers-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .speakers-title {
+        font-size: 2.5rem;
+        color: #2c5f2d;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .speakers-subtitle {
+        text-align: center;
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+      }
+
+      .speakers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2.5rem;
+      }
+
+      .speaker-card {
+        background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .speaker-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .speaker-avatar {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .avatar-placeholder {
+        font-size: 4rem;
+        color: white;
+      }
+
+      .speaker-name {
+        font-size: 1.5rem;
+        color: #2c5f2d;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+
+      .speaker-title {
+        font-size: 1rem;
+        color: #5fb88f;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .speaker-bio {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.6;
+      }
+      /* Stats Section */
+      .stats {
+        background: linear-gradient(135deg, #a8e6cf 0%, #87ceeb 100%);
+        padding: 4rem 2rem;
+      }
+
+      .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .stat-item {
+        color: white;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.95;
+      }
+
+      /* Social Links */
+      .social-section {
+        padding: 4rem 2rem;
+        background: #f8f9fa;
+        text-align: center;
+      }
+
+      .social-section h2 {
+        font-size: 2rem;
+        color: #2c5f2d;
+        margin-bottom: 2rem;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        background: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        color: #2c5f2d;
+        font-weight: 600;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .social-link:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .social-icon {
+        font-size: 1.5rem;
+      }
+
+      /* Footer */
+      footer {
+        background: linear-gradient(135deg, #2c5f2d 0%, #1a472a 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      footer p {
+        margin: 0.5rem 0;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .hero h1 {
-            font-size: 3rem;
-            color: #2c5f2d;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
+          font-size: 2rem;
         }
 
         .hero p {
-            font-size: 1.3rem;
-            color: #4a7c59;
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
+          font-size: 1.1rem;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%);
-            color: white;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        nav {
+          gap: 1rem;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 2rem;
-            background: white;
-        }
-
-        .about-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about h2 {
-            font-size: 2.5rem;
-            color: #2c5f2d;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.9;
-            margin-bottom: 3rem;
-            text-align: justify;
-        }
-
-        /* Mission Cards */
         .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+          grid-template-columns: 1fr;
         }
-
-        .mission-card {
-            background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .mission-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-
-        .mission-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .mission-card h3 {
-            font-size: 1.5rem;
-            color: #2c5f2d;
-            margin-bottom: 1rem;
-        }
-
-        .mission-card p {
-            color: #666;
-            line-height: 1.7;
-        }
-
-        /* Speakers Section */
-        .speakers-section {
-            background: white;
-            padding: 5rem 2rem;
-        }
-
-        .speakers-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .speakers-title {
-            font-size: 2.5rem;
-            color: #2c5f2d;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .speakers-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-        }
-
-        .speakers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .speaker-card {
-            background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .speaker-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .speaker-avatar {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .avatar-placeholder {
-            font-size: 4rem;
-            color: white;
-        }
-
-        .speaker-name {
-            font-size: 1.5rem;
-            color: #2c5f2d;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .speaker-title {
-            font-size: 1rem;
-            color: #5fb88f;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .speaker-bio {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.6;
-        }
-        /* Stats Section */
-        .stats {
-            background: linear-gradient(135deg, #a8e6cf 0%, #87ceeb 100%);
-            padding: 4rem 2rem;
-        }
-
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item {
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
-
-        /* Social Links */
-        .social-section {
-            padding: 4rem 2rem;
-            background: #f8f9fa;
-            text-align: center;
-        }
-
-        .social-section h2 {
-            font-size: 2rem;
-            color: #2c5f2d;
-            margin-bottom: 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            color: #2c5f2d;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .social-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-
-        .social-icon {
-            font-size: 1.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #2c5f2d 0%, #1a472a 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        footer p {
-            margin: 0.5rem 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            nav {
-                gap: 1rem;
-            }
-
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
-  <header>
-   <div class="header-content">
-    <div class="logo-section"><img src="https://ybam-wordpress-media.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2024/05/03162711/ybamlogo2.png" alt="YBAM Logo" onerror="this.src=''; this.alt='Logo failed to load'; this.style.display='none';"> <span class="tagline" id="tagline">古老智慧 · 永续未来</span>
-    </div>
-    <nav><nav><a href="/static/templates/index.html">关于我们</a> <a href="/static/templates/WBC.html">世界佛教大会</a><a href="/static/templates/register.html">马上报名</a> <a href="#programme">大会议程</a>
-    </nav>
-   </div>
-  </header>
-  <section class="hero">
-   <div class="hero-content">
-    <h1 id="hero-title">2025年世界佛教大会</h1>
-    <p id="hero-subtitle">古老智慧 · 永续未来 | 2025年3月29-30日 · 马来西亚吉隆坡/雪兰莪</p><a href="#about" class="cta-button" id="cta-button">了解详情</a>
-   </div>
-  </section>
-  <section class="about" id="about">
-   <div class="about-content">
-    <h2 id="about-title">关于大会</h2>
-    <div class="about-text">
-     <p>2015年，联合国正式启动了一系列可持续发展目标（SDGs），旨在改变我们的世界，呼吁所有国家采取行动，在保护地球的同时确保经济繁荣。这些目标包括促进经济增长、解决与教育、健康、社会保护和就业机会相关的社会需求、应对气候变化和保护环境。</p><br>
-     <p>作为一个拥有2500多年历史的古老宗教，佛教必须采用现代策略，继续造福当代世界。佛教在目标3中发挥着重要作用：确保健康生活，促进所有年龄段人群的福祉。因此，佛教的未来发展目标必须与可持续发展目标保持一致，反映两者之间不可分割的关系。</p><br>
-     <p>随着2030年（SDGs结束年）的临近，值得评估我们目前的进展，并分享最佳实践，帮助佛教生态系统在可持续发展方面与世界紧密接轨。</p>
-    </div>
-    <h2 id="mission-title" style="margin-top: 3rem;">大会主题</h2>
-    <div class="mission-grid">
-     <div class="mission-card">
-      <div class="mission-icon">
-       🌍
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo-section">
+          <img
+            src="https://ybam-wordpress-media.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2024/05/03162711/ybamlogo2.png"
+            alt="YBAM Logo"
+            onerror="this.src=''; this.alt='Logo failed to load'; this.style.display='none';"
+          />
+          <span class="tagline" id="tagline"
+            >Ancient Wisdom · Sustainable Future</span
+          >
+        </div>
+        <nav>
+          <a href="/static/templates/index.html">About Us</a>
+          <a href="/static/templates/WBC.html">World Buddhist Conference</a>
+          <a href="/static/templates/register.html">Register Now</a>
+          <a href="#programme">Programme</a>
+        </nav>
       </div>
-      <h3>佛教与可持续发展</h3>
-      <p>探讨佛教教义和伦理如何支持和促进可持续发展目标的实现，以及佛教核心价值在应对全球挑战中的应用。</p>
-     </div>
-     <div class="mission-card">
-      <div class="mission-icon">
-       🤝
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1 id="hero-title">2025 World Buddhist Conference</h1>
+        <p id="hero-subtitle">
+          Ancient Wisdom · Sustainable Future | 29–30 March 2025 · Kuala Lumpur
+          / Selangor, Malaysia
+        </p>
+        <a href="#about" class="cta-button" id="cta-button">Learn More</a>
       </div>
-      <h3>宗教间合作视角</h3>
-      <p>探讨不同宗教传统如何为可持续发展目标做出贡献，分享宗教倡议促进SDGs的具体案例。</p>
-     </div>
-     <div class="mission-card">
-      <div class="mission-icon">
-       💚
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-content">
+        <h2 id="about-title">About the Conference</h2>
+        <div class="about-text">
+          <p>
+            In 2015, the United Nations launched a series of Sustainable
+            Development Goals (SDGs), aimed at transforming our world while
+            calling upon all nations to act—ensuring economic prosperity while
+            protecting the planet. These goals address economic growth,
+            education, health, social protection, employment opportunities,
+            climate change, and environmental sustainability.
+          </p>
+          <br />
+
+          <p>
+            As an ancient tradition with more than 2,500 years of history,
+            Buddhism must embrace modern strategies to continue benefiting the
+            contemporary world. Buddhism plays a vital role in Goal 3: ensuring
+            healthy lives and promoting well-being for all ages. Thus, the
+            future development of Buddhism must align with the SDGs, reflecting
+            their deeply interconnected relationship.
+          </p>
+          <br />
+
+          <p>
+            With 2030—the target year of the SDGs—approaching, this is a timely
+            moment to assess our progress and share best practices that can help
+            the global Buddhist ecosystem stay aligned with sustainable
+            development efforts worldwide.
+          </p>
+        </div>
+
+        <h2 id="mission-title" style="margin-top: 3rem">Conference Themes</h2>
+        <div class="mission-grid">
+          <div class="mission-card">
+            <div class="mission-icon">🌍</div>
+            <h3>Buddhism & Sustainable Development</h3>
+            <p>
+              Exploring how Buddhist teachings and ethics support the
+              achievement of the SDGs, and how core Buddhist values can be
+              applied to global challenges.
+            </p>
+          </div>
+
+          <div class="mission-card">
+            <div class="mission-icon">🤝</div>
+            <h3>Interfaith Perspectives</h3>
+            <p>
+              Examining how different religious traditions contribute to the
+              SDGs, sharing real examples of interreligious initiatives that
+              advance sustainable development.
+            </p>
+          </div>
+
+          <div class="mission-card">
+            <div class="mission-icon">💚</div>
+            <h3>Buddhism & Social Well-being</h3>
+            <p>
+              Discussing Buddhism’s contributions to health, well-being, poverty
+              alleviation, and gender equality, including meditation practices,
+              charity work, and educational initiatives.
+            </p>
+          </div>
+
+          <div class="mission-card">
+            <div class="mission-icon">☮️</div>
+            <h3>Buddhism, Peace & Global Partnership</h3>
+            <p>
+              Exploring Buddhism’s role in promoting peace, justice, and strong
+              institutions, and the importance of global partnerships and
+              interfaith cooperation in achieving the SDGs.
+            </p>
+          </div>
+        </div>
       </div>
-      <h3>佛教与社会福祉</h3>
-      <p>讨论佛教对健康、福祉、消除贫困和性别平等的贡献，探索佛教禅修、慈善工作和教育倡议如何增进身心健康。</p>
-     </div>
-     <div class="mission-card">
-      <div class="mission-icon">
-       ☮️
+    </section>
+
+    <section class="stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">2 Days</div>
+          <div class="stat-label">Full Programme</div>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Main Themes</div>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-number">Global</div>
+          <div class="stat-label">Speakers & Guests</div>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-number">March</div>
+          <div class="stat-label">2025</div>
+        </div>
       </div>
-      <h3>佛教、和平与全球伙伴关系</h3>
-      <p>审视佛教在促进和平、正义和强大机构方面的作用，讨论全球伙伴关系和宗教间合作在实现SDGs中的重要性。</p>
-     </div>
-    </div>
-   </div>
-  </section>
-  <section class="stats">
-   <div class="stats-grid">
-    <div class="stat-item">
-     <div class="stat-number">
-      2天
-     </div>
-     <div class="stat-label">
-      精彩议程
-     </div>
-    </div>
-    <div class="stat-item">
-     <div class="stat-number">
-      4大
-     </div>
-     <div class="stat-label">
-      核心主题
-     </div>
-    </div>
-    <div class="stat-item">
-     <div class="stat-number">
-      全球
-     </div>
-     <div class="stat-label">
-      专家嘉宾
-     </div>
-    </div>
-    <div class="stat-item">
-     <div class="stat-number">
-      3月
-     </div>
-     <div class="stat-label">
-      2025年
-     </div>
-    </div>
-   </div>
-  </section>
+    </section>
+
     <!-- <section class="speakers-section">
    <div class="speakers-container">
     <h2 class="speakers-title">主讲嘉宾</h2>
@@ -525,510 +575,972 @@
     </div>
    </div>
   </section> -->
-  <section class="speakers-section" id="speakers"></section>
+    <section class="speakers-section" id="speakers"></section>
 
-<section class="speakers-section" id="conference_members"></section>
+    <section class="speakers-section" id="conference_members"></section>
 
-  <section class="about" id="objectives" style="background: #f8f9fa;">
-   <div class="about-content">
-    <h2 style="text-align: center; margin-bottom: 3rem;">大会目标</h2>
-    <div class="mission-grid">
-     <div class="mission-card">
-      <div class="mission-icon">
-       🎯
-      </div>
-      <h3>连接全球SDGs</h3>
-      <p>与全球可持续发展目标接轨，了解本地化和实施SDGs的趋势、高度、见解和态度。</p>
-     </div>
-     <div class="mission-card">
-      <div class="mission-icon">
-       📚
-      </div>
-      <h3>超越教义学习</h3>
-      <p>促进超越教义和经典的学习，关注当前的本地、区域和国际问题。</p>
-     </div>
-     <div class="mission-card">
-      <div class="mission-icon">
-       🔗
-      </div>
-      <h3>现代化方法</h3>
-      <p>将本地佛教生态系统与缩小SDGs指标差距的前沿现代方法联系起来。</p>
-     </div>
-     <div class="mission-card">
-      <div class="mission-icon">
-       📖
-      </div>
-      <h3>知识保存与分享</h3>
-      <p>以出版物形式汇编重要议题信息，在佛教社区中分享SDGs最佳实践。</p>
-     </div>
-    </div>
-    <div style="margin-top: 4rem; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-     <h3 style="color: #2c5f2d; margin-bottom: 1.5rem; text-align: center;">大会信息</h3>
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
-      <div>
-       <div style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem;">
-        📅 日期
-       </div>
-       <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d;">
-        2025年3月29-30日
-       </div>
-      </div>
-      <div>
-       <div style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem;">
-        📍 地点
-       </div>
-       <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d;">
-        吉隆坡/雪兰莪，马来西亚
-       </div>
-      </div>
-      <div>
-       <div style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem;">
-        🎤 形式
-       </div>
-       <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d;">
-        主题演讲 + 论坛
-       </div>
-      </div>
-      <div>
-       <div style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem;">
-        👥 参与者
-       </div>
-       <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d;">
-        全球佛教领袖与青年
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-  </section>
-  <section class="about" id="programme" style="background: white;">
-   <div class="about-content">
-    <h2 style="text-align: center; margin-bottom: 3rem;">大会议程</h2><!-- Day 1 -->
-    <div style="margin-bottom: 4rem;">
-     <h3 style="color: #2c5f2d; font-size: 2rem; margin-bottom: 2rem; text-align: center; padding: 1rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px;">第一天 - 2025年3月29日</h3>
-     <div style="display: grid; gap: 1rem;">
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        9:00 AM
-       </div>
-       <div style="color: #555;">
-        开幕仪式
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        9:10 AM
-       </div>
-       <div style="color: #555;">
-        YBAM主席欢迎致辞
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        9:20 AM
-       </div>
-       <div style="color: #555;">
-        贵宾开幕致辞
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px; border-left: 4px solid #4a9fd8;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        9:45 AM
-       </div>
-       <div style="color: #555; font-weight: 600;">
-        主题演讲：佛教在当代社会的角色及未来发展
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        10:45 AM
-       </div>
-       <div style="color: #555;">
-        问答环节
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #fff3cd; border-radius: 10px; border-left: 4px solid #ffc107;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        11:30 AM
-       </div>
-       <div style="color: #555;">
-        午餐与交流
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        1:00 PM
-       </div>
-       <div style="color: #555;">
-        文艺表演
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px; border-left: 4px solid #4a9fd8;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        1:30 PM
-       </div>
-       <div style="color: #555; font-weight: 600;">
-        专题一：佛教与可持续发展
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        2:30 PM
-       </div>
-       <div style="color: #555;">
-        问答环节
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #fff3cd; border-radius: 10px; border-left: 4px solid #ffc107;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        3:00 PM
-       </div>
-       <div style="color: #555;">
-        茶歇与交流
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px; border-left: 4px solid #4a9fd8;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        3:15 PM
-       </div>
-       <div style="color: #555; font-weight: 600;">
-        专题二：宗教间合作视角下的宗教发展与可持续发展目标
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        4:15 PM
-       </div>
-       <div style="color: #555;">
-        问答环节
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        4:45 PM
-       </div>
-       <div style="color: #555;">
-        回向功德 · 第一天结束
-       </div>
-      </div>
-     </div>
-    </div><!-- Day 2 -->
-    <div>
-     <h3 style="color: #2c5f2d; font-size: 2rem; margin-bottom: 2rem; text-align: center; padding: 1rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px;">第二天 - 2025年3月30日</h3>
-     <div style="display: grid; gap: 1rem;">
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px; border-left: 4px solid #4a9fd8;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        9:00 AM
-       </div>
-       <div style="color: #555; font-weight: 600;">
-        专题三：佛教与社会福祉
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        10:00 AM
-       </div>
-       <div style="color: #555;">
-        问答环节
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        10:30 AM
-       </div>
-       <div style="color: #555;">
-        YBAM介绍
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #fff3cd; border-radius: 10px; border-left: 4px solid #ffc107;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        11:30 AM
-       </div>
-       <div style="color: #555;">
-        午餐与交流
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        1:00 PM
-       </div>
-       <div style="color: #555;">
-        文艺表演
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px; border-left: 4px solid #4a9fd8;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        1:30 PM
-       </div>
-       <div style="color: #555; font-weight: 600;">
-        专题四：佛教、和平与全球伙伴关系
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        2:30 PM
-       </div>
-       <div style="color: #555;">
-        问答环节
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #fff3cd; border-radius: 10px; border-left: 4px solid #ffc107;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        3:00 PM
-       </div>
-       <div style="color: #555;">
-        茶歇与交流
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        3:20 PM
-       </div>
-       <div style="color: #555;">
-        闭幕仪式
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        3:30 PM
-       </div>
-       <div style="color: #555;">
-        组委会主席总结致辞
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        3:40 PM
-       </div>
-       <div style="color: #555;">
-        世界佛教青年会主席闭幕致辞
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%); border-radius: 10px; border-left: 4px solid #4a9fd8;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        4:00 PM
-       </div>
-       <div style="color: #555; font-weight: 600;">
-        三大传统僧伽祝福仪式
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5fb88f;">
-       <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem;">
-        4:30 PM
-       </div>
-       <div style="color: #555;">
-        大会圆满结束
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-  </section>
+    <section class="about" id="objectives" style="background: #f8f9fa">
+      <div class="about-content">
+        <h2 style="text-align: center; margin-bottom: 3rem">
+          Conference Objectives
+        </h2>
 
-<section style="padding: 5rem 2rem; background: linear-gradient(135deg, #d4f1e8 0%, #b8e6f5 100%); text-align: center;">
-   <div style="max-width: 800px; margin: 0 auto;">
-    <h2 style="font-size: 2.5rem; color: #2c5f2d; margin-bottom: 1.5rem;">准备好参加大会了吗？</h2>
-    <p style="font-size: 1.2rem; color: #4a7c59; margin-bottom: 2.5rem; line-height: 1.8;">与来自世界各地的佛教领袖和青年一起，探讨佛教与可持续发展的未来。名额有限，立即报名！</p><a href="/static/templates/register.html" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%); color: white; padding: 1.5rem 4rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.3rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">马上报名</a>
-   </div>
-  </section>
+        <div class="mission-grid">
+          <div class="mission-card">
+            <div class="mission-icon">🎯</div>
+            <h3>Alignment with Global SDGs</h3>
+            <p>
+              Strengthening engagement with the United Nations Sustainable
+              Development Goals by exploring localized implementation, emerging
+              trends, perspectives, and insights.
+            </p>
+          </div>
 
-  <section class="social-section" id="contact">
-   <h2>关注我们</h2>
-   <div class="social-links"><a href="https://www.facebook.com/YBAMalaysia" target="_blank" rel="noopener noreferrer" class="social-link"> <span class="social-icon">📘</span> <span>Facebook</span> </a> <a href="https://www.youtube.com/c/YBAMalaysia" target="_blank" rel="noopener noreferrer" class="social-link"> <span class="social-icon">📺</span> <span>YouTube</span> </a>
-   </div>
-  </section>
-  <footer>
-   <p id="footer-text">© 2025 世界佛教大会 | 主办单位：马来西亚佛教青年总会 (YBAM)</p>
-   <p>World Buddhist Conference 2025 | Organised by Young Buddhist Association of Malaysia</p>
-  </footer>
-  <script>
-        const defaultConfig = {
-            background_color: "#d4f1e8",
-            surface_color: "#e8f8f5",
-            text_color: "#2c5f2d",
-            primary_action_color: "#5fb88f",
-            secondary_action_color: "#4a9fd8",
-            font_family: "Segoe UI",
-            font_size: 16,
-            site_tagline: "古老智慧 · 永续未来",
-            hero_title: "2025年世界佛教大会",
-            hero_subtitle: "古老智慧 · 永续未来 | 2025年3月29-30日 · 马来西亚吉隆坡/雪兰莪",
-            cta_button: "了解详情",
-            about_title: "关于大会",
-            mission_title: "大会主题",
-            footer_text: "© 2025 世界佛教大会 | 主办单位：马来西亚佛教青年总会 (YBAM)"
-        };
-async function renderSection(sectionId, apiUrl) {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
+          <div class="mission-card">
+            <div class="mission-icon">📚</div>
+            <h3>Beyond Doctrinal Learning</h3>
+            <p>
+              Encouraging learning that goes beyond doctrinal and scriptural
+              study to address contemporary local, regional, and international
+              challenges.
+            </p>
+          </div>
 
-    // 请求接口数据
-    const res = await fetch(apiUrl);
-    const data = await res.json();
+          <div class="mission-card">
+            <div class="mission-icon">🔗</div>
+            <h3>Modern Approaches</h3>
+            <p>
+              Connecting the local Buddhist ecosystem with modern strategies and
+              innovation to close the gaps in SDG implementation metrics.
+            </p>
+          </div>
 
-    const title = data.title || "";
-    const subtitle = data.subtitle || "";
+          <div class="mission-card">
+            <div class="mission-icon">📖</div>
+            <h3>Knowledge Preservation & Sharing</h3>
+            <p>
+              Compiling and publishing key insights and best practices to
+              support collective learning and shared progress within the global
+              Buddhist community.
+            </p>
+          </div>
+        </div>
 
-    // items：兼容 speakers / members 字段
-    const items = data.speakers || data.members || [];
+        <div
+          style="
+            margin-top: 4rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          "
+        >
+          <h3 style="color: #2c5f2d; margin-bottom: 1.5rem; text-align: center">
+            Conference Information
+          </h3>
 
-    // 生成 HTML
-    section.innerHTML = `
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 2rem;
+              text-align: center;
+            "
+          >
+            <div>
+              <div
+                style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem"
+              >
+                📅 Date
+              </div>
+              <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d">
+                29–30 March 2025
+              </div>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem"
+              >
+                📍 Location
+              </div>
+              <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d">
+                Kuala Lumpur / Selangor, Malaysia
+              </div>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem"
+              >
+                🎤 Format
+              </div>
+              <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d">
+                Keynotes + Forums
+              </div>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 1.2rem; color: #666; margin-bottom: 0.5rem"
+              >
+                👥 Participants
+              </div>
+              <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d">
+                Global Buddhist leaders & youth
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="programme" style="background: white">
+      <div class="about-content">
+        <h2 style="text-align: center; margin-bottom: 3rem">
+          Conference Programme
+        </h2>
+
+        <!-- Day 1 -->
+        <div style="margin-bottom: 4rem">
+          <h3
+            style="
+              color: #2c5f2d;
+              font-size: 2rem;
+              margin-bottom: 2rem;
+              text-align: center;
+              padding: 1rem;
+              background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+              border-radius: 10px;
+            "
+          >
+            Day 1 – 29 March 2025
+          </h3>
+
+          <div style="display: grid; gap: 1rem">
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                9:00 AM
+              </div>
+              <div style="color: #555">Opening Ceremony</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                9:10 AM
+              </div>
+              <div style="color: #555">Welcome Address by YBAM President</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                9:20 AM
+              </div>
+              <div style="color: #555">Opening Remarks by Guest of Honour</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+                border-radius: 10px;
+                border-left: 4px solid #4a9fd8;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                9:45 AM
+              </div>
+              <div style="color: #555; font-weight: 600">
+                Keynote Speech: The Role of Buddhism in Contemporary Society and
+                Its Future Development
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                10:45 AM
+              </div>
+              <div style="color: #555">Q&A Session</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #fff3cd;
+                border-radius: 10px;
+                border-left: 4px solid #ffc107;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                11:30 AM
+              </div>
+              <div style="color: #555">Lunch & Networking</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                1:00 PM
+              </div>
+              <div style="color: #555">Cultural Performance</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+                border-radius: 10px;
+                border-left: 4px solid #4a9fd8;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                1:30 PM
+              </div>
+              <div style="color: #555; font-weight: 600">
+                Topic 1: Buddhism and Sustainable Development
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                2:30 PM
+              </div>
+              <div style="color: #555">Q&A Session</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #fff3cd;
+                border-radius: 10px;
+                border-left: 4px solid #ffc107;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                3:00 PM
+              </div>
+              <div style="color: #555">Tea Break & Networking</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+                border-radius: 10px;
+                border-left: 4px solid #4a9fd8;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                3:15 PM
+              </div>
+              <div style="color: #555; font-weight: 600">
+                Topic 2: Religious Development and SDGs through an Interfaith
+                Perspective
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                4:15 PM
+              </div>
+              <div style="color: #555">Q&A Session</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                4:45 PM
+              </div>
+              <div style="color: #555">
+                Dedication of Merits • End of Day One
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div>
+          <h3
+            style="
+              color: #2c5f2d;
+              font-size: 2rem;
+              margin-bottom: 2rem;
+              text-align: center;
+              padding: 1rem;
+              background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+              border-radius: 10px;
+            "
+          >
+            Day 2 – 30 March 2025
+          </h3>
+
+          <div style="display: grid; gap: 1rem">
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+                border-radius: 10px;
+                border-left: 4px solid #4a9fd8;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                9:00 AM
+              </div>
+              <div style="color: #555; font-weight: 600">
+                Topic 3: Buddhism and Social Well-being
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                10:00 AM
+              </div>
+              <div style="color: #555">Q&A Session</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                10:30 AM
+              </div>
+              <div style="color: #555">Introduction to YBAM</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #fff3cd;
+                border-radius: 10px;
+                border-left: 4px solid #ffc107;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                11:30 AM
+              </div>
+              <div style="color: #555">Lunch & Networking</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                1:00 PM
+              </div>
+              <div style="color: #555">Cultural Performance</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+                border-radius: 10px;
+                border-left: 4px solid #4a9fd8;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                1:30 PM
+              </div>
+              <div style="color: #555; font-weight: 600">
+                Topic 4: Buddhism, Peace, and Global Partnership
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                2:30 PM
+              </div>
+              <div style="color: #555">Q&A Session</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #fff3cd;
+                border-radius: 10px;
+                border-left: 4px solid #ffc107;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                3:00 PM
+              </div>
+              <div style="color: #555">Tea Break & Networking</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                3:20 PM
+              </div>
+              <div style="color: #555">Closing Ceremony</div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                3:30 PM
+              </div>
+              <div style="color: #555">
+                Closing Remarks by Organizing Committee Chair
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                3:40 PM
+              </div>
+              <div style="color: #555">
+                Closing Remarks by World Buddhist Youth President
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #e8f8f5 0%, #e3f2fd 100%);
+                border-radius: 10px;
+                border-left: 4px solid #4a9fd8;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                4:00 PM
+              </div>
+              <div style="color: #555; font-weight: 600">
+                Blessing Ceremony by the Three Buddhist Traditions
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 150px 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 4px solid #5fb88f;
+              "
+            >
+              <div style="font-weight: 700; color: #2c5f2d; font-size: 1.1rem">
+                4:30 PM
+              </div>
+              <div style="color: #555">Conclusion of the Conference</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      style="
+        padding: 5rem 2rem;
+        background: linear-gradient(135deg, #d4f1e8 0%, #b8e6f5 100%);
+        text-align: center;
+      "
+    >
+      <div style="max-width: 800px; margin: 0 auto">
+        <h2 style="font-size: 2.5rem; color: #2c5f2d; margin-bottom: 1.5rem">
+          准备好参加大会了吗？
+        </h2>
+        <p
+          style="
+            font-size: 1.2rem;
+            color: #4a7c59;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+          "
+        >
+          与来自世界各地的佛教领袖和青年一起，探讨佛教与可持续发展的未来。名额有限，立即报名！
+        </p>
+        <a
+          href="/static/templates/register.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display: inline-block;
+            background: linear-gradient(135deg, #5fb88f 0%, #4a9fd8 100%);
+            color: white;
+            padding: 1.5rem 4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+          "
+          >马上报名</a
+        >
+      </div>
+    </section>
+
+    <section class="social-section" id="contact">
+      <h2>Follow Us</h2>
+      <div class="social-links">
+        <a
+          href="https://www.facebook.com/YBAMalaysia"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+        >
+          <span class="social-icon">📘</span>
+          <span>Facebook</span>
+        </a>
+        <a
+          href="https://www.youtube.com/c/YBAMalaysia"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+        >
+          <span class="social-icon">📺</span>
+          <span>YouTube</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p id="footer-text">
+        © 2024 Young Buddhist Association of Malaysia (YBAM). All Rights
+        Reserved.
+      </p>
+      <p>Young Buddhist Association of Malaysia</p>
+    </footer>
+
+    <script>
+      const defaultConfig = {
+        background_color: "#d4f1e8",
+        surface_color: "#e8f8f5",
+        text_color: "#2c5f2d",
+        primary_action_color: "#5fb88f",
+        secondary_action_color: "#4a9fd8",
+        font_family: "Segoe UI",
+        font_size: 16,
+        site_tagline: "Wisdom · Compassion · Gratitude",
+        hero_title: "Young Buddhist Association of Malaysia",
+        hero_subtitle:
+          "Guiding Malaysian Buddhist youth, promoting mindful living, and cultivating a society of wisdom, compassion, and gratitude",
+        cta_button: "Learn More",
+        about_title: "About YBAM",
+        mission_title: "Our Core Values",
+        footer_text:
+          "© 2024 Young Buddhist Association of Malaysia (YBAM). All rights reserved.",
+      };
+      async function renderSection(sectionId, apiUrl) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        // 请求接口数据
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+
+        const title = data.title || "";
+        const subtitle = data.subtitle || "";
+
+        // items：兼容 speakers / members 字段
+        const items = data.speakers || data.members || [];
+
+        // 生成 HTML
+        section.innerHTML = `
         <div class="speakers-container">
             <h2 class="speakers-title">${title}</h2>
             <p class="speakers-subtitle">${subtitle}</p>
             <div class="speakers-grid">
-                ${items.map(item => `
+                ${items
+                  .map(
+                    (item) => `
                     <div class="speaker-card">
                         <div class="speaker-avatar">
                             <div class="avatar-placeholder">👤</div>
                         </div>
                         <h3 class="speaker-name">${item.name}</h3>
-                        <p class="speaker-title">${item.title || item.institution || ""}</p>
+                        <p class="speaker-title">${
+                          item.title || item.institution || ""
+                        }</p>
                         <p class="speaker-bio">${item.bio || ""}</p>
                     </div>
-                `).join("")}
+                `
+                  )
+                  .join("")}
             </div>
         </div>
     `;
-}
-        async function onConfigChange(config) {
-            const backgroundColor = config.background_color || defaultConfig.background_color;
-            const surfaceColor = config.surface_color || defaultConfig.surface_color;
-            const textColor = config.text_color || defaultConfig.text_color;
-            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
-            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
-            const fontFamily = config.font_family || defaultConfig.font_family;
-            const fontSize = config.font_size || defaultConfig.font_size;
+      }
+      async function onConfigChange(config) {
+        const backgroundColor =
+          config.background_color || defaultConfig.background_color;
+        const surfaceColor =
+          config.surface_color || defaultConfig.surface_color;
+        const textColor = config.text_color || defaultConfig.text_color;
+        const primaryActionColor =
+          config.primary_action_color || defaultConfig.primary_action_color;
+        const secondaryActionColor =
+          config.secondary_action_color || defaultConfig.secondary_action_color;
+        const fontFamily = config.font_family || defaultConfig.font_family;
+        const fontSize = config.font_size || defaultConfig.font_size;
 
-            // Apply colors
-            document.querySelector('.hero').style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${surfaceColor} 100%)`;
-            document.querySelector('.stats').style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
-            
-            const missionCards = document.querySelectorAll('.mission-card');
-            missionCards.forEach(card => {
-                card.style.background = `linear-gradient(135deg, ${surfaceColor} 0%, ${backgroundColor} 100%)`;
-            });
+        // Apply colors
+        document.querySelector(
+          ".hero"
+        ).style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${surfaceColor} 100%)`;
+        document.querySelector(
+          ".stats"
+        ).style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
 
-            const headers = document.querySelectorAll('h1, h2, h3');
-            headers.forEach(header => {
-                header.style.color = textColor;
-            });
+        const missionCards = document.querySelectorAll(".mission-card");
+        missionCards.forEach((card) => {
+          card.style.background = `linear-gradient(135deg, ${surfaceColor} 0%, ${backgroundColor} 100%)`;
+        });
 
-            const ctaButton = document.querySelector('.cta-button');
-            ctaButton.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+        const headers = document.querySelectorAll("h1, h2, h3");
+        headers.forEach((header) => {
+          header.style.color = textColor;
+        });
 
-            const navLinks = document.querySelectorAll('nav a');
-            navLinks.forEach(link => {
-                link.style.color = textColor;
-            });
+        const ctaButton = document.querySelector(".cta-button");
+        ctaButton.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
 
-            // Apply fonts
-            const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
-            document.body.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+        const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach((link) => {
+          link.style.color = textColor;
+        });
 
-            // Apply font sizes
-            document.querySelector('.hero h1').style.fontSize = `${fontSize * 3}px`;
-            document.querySelector('.hero p').style.fontSize = `${fontSize * 1.3}px`;
-            document.querySelectorAll('.about h2').forEach(h2 => {
-                h2.style.fontSize = `${fontSize * 2.5}px`;
-            });
-            document.querySelector('.about-text').style.fontSize = `${fontSize * 1.1}px`;
-            document.querySelectorAll('.mission-card h3').forEach(h3 => {
-                h3.style.fontSize = `${fontSize * 1.5}px`;
-            });
+        // Apply fonts
+        const baseFontStack = "Tahoma, Geneva, Verdana, sans-serif";
+        document.body.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
 
-            // Apply text content
-            document.getElementById('tagline').textContent = config.site_tagline || defaultConfig.site_tagline;
-            document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
-            document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
-            document.getElementById('cta-button').textContent = config.cta_button || defaultConfig.cta_button;
-            document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
-            document.getElementById('mission-title').textContent = config.mission_title || defaultConfig.mission_title;
-            document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
-        }
+        // Apply font sizes
+        document.querySelector(".hero h1").style.fontSize = `${fontSize * 3}px`;
+        document.querySelector(".hero p").style.fontSize = `${
+          fontSize * 1.3
+        }px`;
+        document.querySelectorAll(".about h2").forEach((h2) => {
+          h2.style.fontSize = `${fontSize * 2.5}px`;
+        });
+        document.querySelector(".about-text").style.fontSize = `${
+          fontSize * 1.1
+        }px`;
+        document.querySelectorAll(".mission-card h3").forEach((h3) => {
+          h3.style.fontSize = `${fontSize * 1.5}px`;
+        });
 
-        function mapToCapabilities(config) {
-            return {
-                recolorables: [
-                    {
-                        get: () => config.background_color || defaultConfig.background_color,
-                        set: (value) => {
-                            config.background_color = value;
-                            window.elementSdk.setConfig({ background_color: value });
-                        }
-                    },
-                    {
-                        get: () => config.surface_color || defaultConfig.surface_color,
-                        set: (value) => {
-                            config.surface_color = value;
-                            window.elementSdk.setConfig({ surface_color: value });
-                        }
-                    },
-                    {
-                        get: () => config.text_color || defaultConfig.text_color,
-                        set: (value) => {
-                            config.text_color = value;
-                            window.elementSdk.setConfig({ text_color: value });
-                        }
-                    },
-                    {
-                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
-                        set: (value) => {
-                            config.primary_action_color = value;
-                            window.elementSdk.setConfig({ primary_action_color: value });
-                        }
-                    },
-                    {
-                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
-                        set: (value) => {
-                            config.secondary_action_color = value;
-                            window.elementSdk.setConfig({ secondary_action_color: value });
-                        }
-                    }
-                ],
-                borderables: [],
-                fontEditable: {
-                    get: () => config.font_family || defaultConfig.font_family,
-                    set: (value) => {
-                        config.font_family = value;
-                        window.elementSdk.setConfig({ font_family: value });
-                    }
-                },
-                fontSizeable: {
-                    get: () => config.font_size || defaultConfig.font_size,
-                    set: (value) => {
-                        config.font_size = value;
-                        window.elementSdk.setConfig({ font_size: value });
-                    }
-                }
-            };
-        }
+        // Apply text content
+        document.getElementById("tagline").textContent =
+          config.site_tagline || defaultConfig.site_tagline;
+        document.getElementById("hero-title").textContent =
+          config.hero_title || defaultConfig.hero_title;
+        document.getElementById("hero-subtitle").textContent =
+          config.hero_subtitle || defaultConfig.hero_subtitle;
+        document.getElementById("cta-button").textContent =
+          config.cta_button || defaultConfig.cta_button;
+        document.getElementById("about-title").textContent =
+          config.about_title || defaultConfig.about_title;
+        document.getElementById("mission-title").textContent =
+          config.mission_title || defaultConfig.mission_title;
+        document.getElementById("footer-text").textContent =
+          config.footer_text || defaultConfig.footer_text;
+      }
 
-        function mapToEditPanelValues(config) {
-            return new Map([
-                ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
-                ["hero_title", config.hero_title || defaultConfig.hero_title],
-                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
-                ["cta_button", config.cta_button || defaultConfig.cta_button],
-                ["about_title", config.about_title || defaultConfig.about_title],
-                ["mission_title", config.mission_title || defaultConfig.mission_title],
-                ["footer_text", config.footer_text || defaultConfig.footer_text]
-            ]);
-        }
+      function mapToCapabilities(config) {
+        return {
+          recolorables: [
+            {
+              get: () =>
+                config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              },
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              },
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              },
+            },
+            {
+              get: () =>
+                config.primary_action_color ||
+                defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              },
+            },
+            {
+              get: () =>
+                config.secondary_action_color ||
+                defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              },
+            },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            },
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            },
+          },
+        };
+      }
 
-        if (window.elementSdk) {
-            window.elementSdk.init({
-                defaultConfig,
-                onConfigChange,
-                mapToCapabilities,
-                mapToEditPanelValues
-            });
-        }
-        document.addEventListener("DOMContentLoaded", () => {
-    renderSection("speakers", "/guest_and_member/speakers");
-    renderSection("conference_members", "/guest_and_member/conference_members");
-});
+      function mapToEditPanelValues(config) {
+        return new Map([
+          ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          [
+            "hero_subtitle",
+            config.hero_subtitle || defaultConfig.hero_subtitle,
+          ],
+          ["cta_button", config.cta_button || defaultConfig.cta_button],
+          ["about_title", config.about_title || defaultConfig.about_title],
+          [
+            "mission_title",
+            config.mission_title || defaultConfig.mission_title,
+          ],
+          ["footer_text", config.footer_text || defaultConfig.footer_text],
+        ]);
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues,
+        });
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        renderSection("speakers", "/guest_and_member/speakers");
+        renderSection(
+          "conference_members",
+          "/guest_and_member/conference_members"
+        );
+      });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d1faaab0142441',t:'MTc2MjkwODAzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'99d1faaab0142441',t:'MTc2MjkwODAzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
 </html>

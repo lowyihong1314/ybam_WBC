@@ -3,6 +3,9 @@ from models import db
 from datetime import datetime
 import json
 
+
+## 帮我在 mariadb 创建 YBAM 数据库 ，然后创建这些表
+
 class RegisterData(db.Model):
     __tablename__ = 'register_data'
 
