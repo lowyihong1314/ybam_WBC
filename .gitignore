@@ -30,3 +30,6 @@ dist/
 
 # uploads
 uploads/
+
+# DB
+instance/
