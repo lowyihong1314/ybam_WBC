@@ -81,7 +81,7 @@ sudo systemctl status ybam.service
 
 在服务器 /home/YBAM/ 执行：
 
-rsync -avz \
+rsync -avz --delete \
   --exclude='venv' \
   --exclude='__pycache__' \
   --exclude='.git' \
@@ -90,6 +90,7 @@ rsync -avz \
   --exclude='*.db' \
   utba@utba.utbabuddha.com:/home/utba/flaskapp/YBAM/ \
   .
+
 
 ## 🔁 更新后重启服务
 sudo systemctl restart ybam.service

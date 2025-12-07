@@ -23,10 +23,10 @@ function renderLayout() {
                 <span class="tagline" id="tagline">Wisdom · Compassion · Gratitude</span>
             </div>
             <nav>
-                <a href="#about">About Us</a>
+                <a href="/static/templates/index.html#about">About Us</a>
                 <a href="/static/templates/WBC.html">World Buddhist Conference</a>
                 <a href="/static/templates/register.html">Register Now</a>
-                <a href="#contact">Contact Us</a>
+                <a href="/static/templates/index.html#contact">Contact Us</a>
             </nav>
         </div>
     `;
@@ -44,7 +44,6 @@ function renderFooter() {
     `;
   document.body.appendChild(footer);
 }
-
 
 async function addCountrySelectWithDialCode(container) {
   const countryDialCodes = await fetchCountryDialCodes();
@@ -156,7 +155,7 @@ function addInput(
   form.appendChild(input);
 }
 
-function addSubmitButton(form, buttonText = "提交报名") {
+function addSubmitButton(form, buttonText = "提交报名 Form Submission") {
   const button = document.createElement("button");
   button.type = "submit";
   button.id = "submitBtn";
@@ -760,7 +759,7 @@ function addDocTypeAndNumberAndAge(form) {
 
   // === Remove exchange rate UI completely ===
   // (Your system no longer needs any rates or USD)
-  
+
   // === File Upload ===
   const fileInputContainer = document.createElement("div");
   fileInputContainer.id = "file_input_container";
@@ -1011,6 +1010,50 @@ function addDocTypeAndNumberAndAge(form) {
 //   container.appendChild(msgDiv);
 //   document.body.appendChild(container);
 // }
+
+function addConferenceInfoSection(form) {
+  const wrapper = document.createElement("div");
+  wrapper.style.margin = "20px 0";
+  wrapper.style.padding = "15px";
+  wrapper.style.border = "1px solid #ddd";
+  wrapper.style.borderRadius = "8px";
+  wrapper.style.background = "#fafafa";
+
+  wrapper.innerHTML = `
+    <h3 style="margin-top:0;color:#2c5f2d;">Conference Information</h3>
+
+    <p><strong>Theme:</strong> Artificial Intelligence, Buddhism & Buddhist Life</p>
+
+    <p><strong>Refund Policy:</strong><br>
+    All registrations are final and non-refundable; for any exceptional refund request, please contact us at 
+    <a href="mailto:wbc@ybam.org.my">wbc@ybam.org.my</a>.
+    </p>
+
+    <p><strong>Terms & Conditions:</strong><br>
+    By registering for the World Buddhist Conference (“the Conference”), participants acknowledge that the Organisers may make reasonable adjustments to the programme, schedule, speakers, or venue where necessary. The Organisers may also record or photograph the event for archival or promotional use.
+    </p>
+
+    <p><strong>Paper Submission:</strong><br>
+    <a href="#">Click here to submit your paper</a> (replace with real link)
+    </p>
+
+    <p><strong>Programme:</strong><br>
+    <a href="#">View Programme</a> (replace with real link)
+    </p>
+
+    <p><strong>Technical Team:</strong><br>
+    <a href="#">Organising / Technical Committee</a>
+    </p>
+
+    <p><strong>Contact:</strong><br>
+    Email: <a href="mailto:wbc@ybam.org.my">wbc@ybam.org.my</a><br>
+    Address / Phone (optional)
+    </p>
+  `;
+
+  form.appendChild(wrapper);
+}
+
 async function renderFormAndBind() {
   const container = document.createElement("div");
   container.className = "container";
@@ -1029,7 +1072,8 @@ async function renderFormAndBind() {
   title.style.color = "#2c5f2d";
 
   const subtitle = document.createElement("p");
-  subtitle.textContent = "Please fill in the required information to complete your registration";
+  subtitle.textContent =
+    "Please fill in the required information to complete your registration";
   subtitle.style.textAlign = "center";
   subtitle.style.color = "#555";
 
@@ -1079,8 +1123,23 @@ async function renderFormAndBind() {
   form.appendChild(phoneLabel);
   form.appendChild(phoneInput);
 
-  addInput(form, "Emergency Contact", "emergency_contact", false, "Example: Jane, 87654321");
-  addInput(form, "Medical Information", "medical_information", false, "Example: None");
+  addInput(
+    form,
+    "Emergency Contact",
+    "emergency_contact",
+    false,
+    "Example: Jane, 87654321"
+  );
+  addInput(
+    form,
+    "Medical Information",
+    "medical_information",
+    false,
+    "Example: None"
+  );
+  // ⭐ 在这里插入 conference info / policies / links ⭐
+  addConferenceInfoSection(form);
+
   addSubmitButton(form);
 
   const msgDiv = document.createElement("div");
@@ -1111,6 +1170,7 @@ async function getProcessedFile(file) {
   // 其他类型直接上传
   return file;
 }
+
 function dataURLtoBlob(dataURL, fileName = "upload.jpg") {
   const [meta, content] = dataURL.split(",");
   const mime = meta.match(/:(.*?);/)[1];

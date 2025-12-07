@@ -380,7 +380,7 @@
         }
       }
     </style>
-    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="/static/js/init.js" type="text/javascript"></script>
     <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
   </head>
   <body>
@@ -405,15 +405,15 @@
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero-content">
+    <section class="hero" id="hero">
+      <!-- <div class="hero-content">
         <h1 id="hero-title">2025 World Buddhist Conference</h1>
         <p id="hero-subtitle">
-          Ancient Wisdom · Sustainable Future | 29–30 March 2025 · Kuala Lumpur
+          Ancient Wisdom · Sustainable Future | 29–30 March 2026 · Kuala Lumpur
           / Selangor, Malaysia
         </p>
         <a href="#about" class="cta-button" id="cta-button">Learn More</a>
-      </div>
+      </div> -->
     </section>
 
     <section class="about" id="about">
@@ -512,7 +512,7 @@
 
         <div class="stat-item">
           <div class="stat-number">March</div>
-          <div class="stat-label">2025</div>
+          <div class="stat-label">2026</div>
         </div>
       </div>
     </section>
@@ -654,7 +654,7 @@
                 📅 Date
               </div>
               <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d">
-                29–30 March 2025
+                March 14–15, 2026
               </div>
             </div>
 
@@ -665,7 +665,7 @@
                 📍 Location
               </div>
               <div style="font-size: 1.3rem; font-weight: 600; color: #2c5f2d">
-                Kuala Lumpur / Selangor, Malaysia
+                33, Prangin Mall, Penang, Malaysia
               </div>
             </div>
 
@@ -714,7 +714,7 @@
               border-radius: 10px;
             "
           >
-            Day 1 – 29 March 2025
+            Day1 - 14 March 2026
           </h3>
 
           <div style="display: grid; gap: 1rem">
@@ -964,7 +964,7 @@
               border-radius: 10px;
             "
           >
-            Day 2 – 30 March 2025
+            Day 2 – 15 March 2026
           </h3>
 
           <div style="display: grid; gap: 1rem">
@@ -1212,7 +1212,7 @@
     >
       <div style="max-width: 800px; margin: 0 auto">
         <h2 style="font-size: 2.5rem; color: #2c5f2d; margin-bottom: 1.5rem">
-          准备好参加大会了吗？
+          Ready to join the conference?
         </h2>
         <p
           style="
@@ -1222,7 +1222,9 @@
             line-height: 1.8;
           "
         >
-          与来自世界各地的佛教领袖和青年一起，探讨佛教与可持续发展的未来。名额有限，立即报名！
+          Join Buddhist leaders and youths from around the world to explore the
+          future of Buddhism and sustainable development. Limited seats
+          available — register now!
         </p>
         <a
           href="/static/templates/register.html"
@@ -1240,41 +1242,17 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
           "
-          >马上报名</a
+          >Register Now</a
         >
       </div>
     </section>
 
     <section class="social-section" id="contact">
-      <h2>Follow Us</h2>
-      <div class="social-links">
-        <a
-          href="https://www.facebook.com/YBAMalaysia"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-link"
-        >
-          <span class="social-icon">📘</span>
-          <span>Facebook</span>
-        </a>
-        <a
-          href="https://www.youtube.com/c/YBAMalaysia"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-link"
-        >
-          <span class="social-icon">📺</span>
-          <span>YouTube</span>
-        </a>
-      </div>
+
     </section>
 
-    <footer>
-      <p id="footer-text">
-        © 2024 Young Buddhist Association of Malaysia (YBAM). All Rights
-        Reserved.
-      </p>
-      <p>Young Buddhist Association of Malaysia</p>
+    <footer id="ybam_footer">
+
     </footer>
 
     <script>
@@ -1500,47 +1478,15 @@
         });
       }
       document.addEventListener("DOMContentLoaded", () => {
+        generate_hero_content();
+        generate_contact_section();
+        generate_footer_section();
         renderSection("speakers", "/guest_and_member/speakers");
         renderSection(
           "conference_members",
           "/guest_and_member/conference_members"
         );
       });
-    </script>
-    <script>
-      (function () {
-        function c() {
-          var b = a.contentDocument || a.contentWindow.document;
-          if (b) {
-            var d = b.createElement("script");
-            d.innerHTML =
-              "window.__CF$cv$params={r:'99d1faaab0142441',t:'MTc2MjkwODAzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
-            b.getElementsByTagName("head")[0].appendChild(d);
-          }
-        }
-        if (document.body) {
-          var a = document.createElement("iframe");
-          a.height = 1;
-          a.width = 1;
-          a.style.position = "absolute";
-          a.style.top = 0;
-          a.style.left = 0;
-          a.style.border = "none";
-          a.style.visibility = "hidden";
-          document.body.appendChild(a);
-          if ("loading" !== document.readyState) c();
-          else if (window.addEventListener)
-            document.addEventListener("DOMContentLoaded", c);
-          else {
-            var e = document.onreadystatechange || function () {};
-            document.onreadystatechange = function (b) {
-              e(b);
-              "loading" !== document.readyState &&
-                ((document.onreadystatechange = e), c());
-            };
-          }
-        }
-      })();
     </script>
   </body>
 </html>

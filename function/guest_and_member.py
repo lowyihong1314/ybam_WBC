@@ -80,37 +80,37 @@ def conference_members():
 @guest_and_member_bp.route("/speakers", methods=["GET"])
 def speakers():
     data = {
-        "title": "主讲嘉宾",
-        "subtitle": "我们荣幸邀请到以下杰出的佛教领袖和学者",
+        "title": "Keynote Speakers",
+        "subtitle": "We are honoured to invite the following distinguished Buddhist leaders and scholars",
         "speakers": [
             {
-                "name": "释慧光法师",
-                "title": "国际佛教联合会会长",
-                "bio": "致力于推动佛教现代化发展，在可持续发展领域有深入研究",
+                "name": "Venerable Hui Guang",
+                "title": "President of the International Buddhist Federation",
+                "bio": "Dedicated to promoting the modern development of Buddhism, with extensive research in sustainable development.",
                 "avatar": None
             },
             {
-                "name": "陈明德教授",
-                "title": "佛学研究院院长",
-                "bio": "专注于佛教伦理与社会福祉研究，著有多部学术专著",
+                "name": "Professor Chan Ming Te",
+                "title": "Director of the Institute of Buddhist Studies",
+                "bio": "Specialises in Buddhist ethics and social welfare, and has authored multiple academic publications.",
                 "avatar": None
             },
             {
-                "name": "释觉明法师",
-                "title": "禅修中心导师",
-                "bio": "推广正念禅修，致力于将佛教智慧应用于心理健康领域",
+                "name": "Venerable Jue Ming",
+                "title": "Meditation Centre Instructor",
+                "bio": "Promotes mindfulness meditation and applies Buddhist wisdom in the field of mental health.",
                 "avatar": None
             },
             {
-                "name": "林慧珊博士",
-                "title": "环境伦理学专家",
-                "bio": "研究佛教生态观与环境保护，倡导绿色佛教理念",
+                "name": "Dr. Lim Hui Shan",
+                "title": "Environmental Ethics Expert",
+                "bio": "Studies Buddhist ecological perspectives and environmental protection, advocating the concept of Green Buddhism.",
                 "avatar": None
             },
             {
-                "name": "释智慧法师",
-                "title": "青年佛教协会主席",
-                "bio": "致力于佛教青年培养，推动宗教间对话与和平建设",
+                "name": "Venerable Zhi Hui",
+                "title": "President of the Buddhist Youth Association",
+                "bio": "Committed to nurturing Buddhist youth and promoting interfaith dialogue and peacebuilding.",
                 "avatar": None
             }
         ]
