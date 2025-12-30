@@ -116,3 +116,36 @@ def speakers():
         ]
     }
     return jsonify(data)
+
+@guest_and_member_bp.route("/programme", methods=["GET"])
+def programme():
+    data = {
+        "day1": {
+            "title": "Day 1 - 14 March 2026",
+            "items": [
+                {"time": "9:00 AM – 10:00 AM", "title": "Opening Ceremony"},
+                {"time": "10:00 AM – 10:45 AM", "title": "Keynote Speech", "highlight": True},
+                {"time": "10:45 AM – 11:00 AM", "title": "Q&A Session"},
+                {"time": "11:00 AM – 11:45 AM", "title": "Invited Speaker Talk"},
+                {"time": "11:45 AM – 12:00 PM", "title": "Q&A Session"},
+                {"time": "12:00 PM – 2:00 PM", "title": "Lunch & Networking", "type": "break"},
+                {"time": "2:00 PM – 5:00 PM", "title": "Workshop 1 / Parallel Session with Paper Presentation", "highlight": True}
+            ]
+        },
+        "day2": {
+            "title": "Day 2 – 15 March 2026",
+            "items": [
+                {"time": "9:00 AM – 9:45 AM", "title": "Invited Speaker Talk"},
+                {"time": "9:45 AM – 10:00 AM", "title": "Q&A Session"},
+                {"time": "10:00 AM – 10:45 AM", "title": "Invited Speaker Talk"},
+                {"time": "10:45 AM – 11:00 AM", "title": "Q&A Session"},
+                {"time": "11:00 AM – 11:45 AM", "title": "Invited Speaker Talk"},
+                {"time": "11:45 AM – 12:00 PM", "title": "Q&A Session"},
+                {"time": "12:00 PM – 2:00 PM", "title": "Lunch & Networking", "type": "break"},
+                {"time": "2:00 PM – 4:30 PM", "title": "Workshop 2", "highlight": True},
+                {"time": "4:30 PM – 5:00 PM", "title": "Closing Ceremony"}
+            ]
+        }
+    }
+
+    return jsonify(data)

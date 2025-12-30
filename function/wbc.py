@@ -104,40 +104,50 @@ def delete_register_data(record_id):
         db.session.rollback()
         return jsonify({"success": False, "error": str(e)}), 500
 
-@wbc_bp.route("/register/<int:record_id>/edit", methods=["POST"])
-def edit_register_data(record_id):
-    record = RegisterData.query.get(record_id)
-    if not record or record.deleted:
-        return jsonify({"success": False, "error": "记录不存在或已删除"}), 404
+@wbc_bp.route("/register/<int:record_id>/review", methods=["POST"])
+def review_register_data(record_id):
+    record = RegisterData.query.filter_by(
+        id=record_id,
+        deleted=False
+    ).first()
 
-    form = request.form
-    try:
-        record.name = form.get("name", record.name)
-        record.name_cn = form.get("name_cn", record.name_cn)
-        record.phone = form.get("phone", record.phone)
-        record.email = form.get("email", record.email)
-        record.country = form.get("country", record.country)
-        record.age = form.get("age", record.age)
-        record.medical_information = form.get("medical_information", record.medical_information)
-        record.emergency_contact = form.get("emergency_contact", record.emergency_contact)
-        record.doc_type = form.get("doc_type", record.doc_type)
-        record.doc_no = form.get("doc_no", record.doc_no)
-        record.payment_amount = form.get("payment_amount", record.payment_amount)
+    if not record:
+        return jsonify({
+            "success": False,
+            "error": "Record not found"
+        }), 404
 
-        file = request.files.get("payment_doc")
-        if file:
-            upload_dir = os.path.join(flask_path, "uploads")
-            os.makedirs(upload_dir, exist_ok=True)
-            filename = secure_filename(file.filename)
-            saved_file_path = os.path.join(upload_dir, filename)
-            file.save(saved_file_path)
-            record.payment_doc = saved_file_path
+    data = request.get_json(silent=True) or {}
+    action = data.get("action")
 
-        db.session.commit()
-        return jsonify({"success": True, "message": "编辑成功", "data": record.to_dict()})
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"success": False, "error": str(e)}), 500
+    if action not in ("accept", "reject"):
+        return jsonify({
+            "success": False,
+            "error": "Invalid action, must be 'accept' or 'reject'"
+        }), 400
+
+    # 可选：防止重复操作
+    if action == "accept" and record.validfy:
+        return jsonify({
+            "success": False,
+            "error": "Already accepted"
+        }), 400
+
+    if action == "accept":
+        record.validfy = True
+        message = "审核已通过"
+    else:
+        record.validfy = False
+        message = "审核已拒绝"
+
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "message": message,
+        "data": record.to_dict()
+    })
+
 
 @wbc_bp.route("/register/image/<int:record_id>", methods=["GET"])
 def get_register_data_img(record_id):
@@ -162,18 +172,10 @@ def register():
         # 支付字段 — 来自 hidden input
         # =============================
         payment_amount = form.get("payment_amount")
-        payment_currency = form.get("payment_currency")
-        payment_amount_myr = form.get("payment_amount_myr")
-
         try:
             payment_amount = float(payment_amount)
         except:
             payment_amount = None
-
-        try:
-            payment_amount_myr = float(payment_amount_myr)
-        except:
-            payment_amount_myr = None
 
         # =============================
         # 是否投稿
@@ -210,12 +212,15 @@ def register():
             doc_type=form.get("doc_type"),
 
             payment_amount=payment_amount,
-            payment_amount_myr=payment_amount_myr,
-            payment_currency=payment_currency,
 
+            # ⭐新增
             paper_presentation=paper_present,
-            payment_doc=payment_doc_filename     # ⭐只存文件名！
+            paper_title=form.get("paper_title"),
+            abstract=form.get("abstract"),
+
+            payment_doc=payment_doc_filename  # ⭐只存文件名
         )
+
 
         db.session.add(new_record)
         db.session.commit()

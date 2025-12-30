@@ -423,63 +423,65 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = document.createElement("div");
     card.classList.add("register-card");
 
-    // 使用 Object.assign 为卡片添加暗色系样式
+    // ==============================
+    // 基础卡片样式
+    // ==============================
     Object.assign(card.style, {
-      border: "1px solid #444", // 暗色边框
+      border: "1px solid #444",
       borderRadius: "10px",
       padding: "12px",
-      backgroundColor: "#333", // 暗色背景
-      color: "white", // 白色文字
+      backgroundColor: "#333",
+      color: "white",
       display: "flex",
       flexDirection: "column",
-      alignItems: "flex-start", // 文字靠左对齐
-      justifyContent: "space-between", // 保持一致的卡片内容布局
-      minHeight: "250px", // 确保卡片高度一致
-      width: "250px", // 统一宽度
-      transition: "transform 0.3s ease, box-shadow 0.3s ease", // 渲染和悬停动画
+      alignItems: "flex-start",
+      justifyContent: "space-between",
+      minHeight: "250px",
+      width: "250px",
+      transition: "transform 0.3s ease, box-shadow 0.3s ease",
       cursor: "pointer",
     });
 
-    // 处理支付状态
+    // ==============================
+    // 支付状态
+    // ==============================
     let paid = false;
     if (item.payment_transactions && item.payment_transactions.length > 0) {
       paid = item.payment_transactions.some((tx) => tx.paid === true);
     }
 
-    // 根据支付状态调整 box-shadow
-    if (paid) {
-      card.style.boxShadow = "0 4px 12px rgba(0, 255, 0, 0.3)"; // 已支付，绿色阴影
-    } else {
-      card.style.boxShadow = "0 4px 12px rgba(255, 0, 0, 0.3)"; // 未支付，红色阴影
-    }
+    card.style.boxShadow = paid
+      ? "0 4px 12px rgba(0, 255, 0, 0.3)"
+      : "0 4px 12px rgba(255, 0, 0, 0.3)";
 
-    // Hover 动画
     card.addEventListener("mouseenter", () => {
       card.style.boxShadow = paid
-        ? "0 6px 14px rgba(0, 255, 0, 0.5)" // 已支付，放大绿色阴影
-        : "0 6px 14px rgba(255, 0, 0, 0.5)"; // 未支付，放大红色阴影
-      card.style.transform = "scale(1.05)"; // 放大效果
-    });
-    card.addEventListener("mouseleave", () => {
-      card.style.boxShadow = paid
-        ? "0 4px 12px rgba(0, 255, 0, 0.3)" // 已支付，恢复绿色阴影
-        : "0 4px 12px rgba(255, 0, 0, 0.3)"; // 未支付，恢复红色阴影
-      card.style.transform = "scale(1)"; // 恢复大小
+        ? "0 6px 14px rgba(0, 255, 0, 0.5)"
+        : "0 6px 14px rgba(255, 0, 0, 0.5)";
+      card.style.transform = "scale(1.05)";
     });
 
-    // 点击开启详情
+    card.addEventListener("mouseleave", () => {
+      card.style.boxShadow = paid
+        ? "0 4px 12px rgba(0, 255, 0, 0.3)"
+        : "0 4px 12px rgba(255, 0, 0, 0.3)";
+      card.style.transform = "scale(1)";
+    });
+
+    // ==============================
+    // 点击 / 右键
+    // ==============================
     card.addEventListener("click", () => {
       generate_register_data_detail_modal(item);
     });
 
-    // 右键菜单
     card.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       show_contax_menu(e, item);
     });
 
     // ==============================
-    // 显示金额
+    // 金额
     // ==============================
     const amount = document.createElement("p");
     amount.style.margin = "4px 0";
@@ -491,9 +493,45 @@ document.addEventListener("DOMContentLoaded", () => {
       amount.textContent = "未付款";
     }
 
-    // 颜色强调
     amount.style.color = paid ? "green" : "red";
     card.appendChild(amount);
+
+    // ==============================
+    // 投稿审核状态
+    // ==============================
+    if (item.paper_presentation) {
+      let reviewText = "待审核";
+      let reviewColor = "#f0ad4e";
+      let reviewIcon = "fa-hourglass-half";
+
+      if (item.validfy === true) {
+        reviewText = "已通过";
+        reviewColor = "#28a745";
+        reviewIcon = "fa-check-circle";
+      } else if (item.validfy === false) {
+        reviewText = "已拒绝";
+        reviewColor = "#dc3545";
+        reviewIcon = "fa-times-circle";
+      }
+
+      const review = document.createElement("p");
+      review.style.margin = "6px 0";
+      review.style.fontSize = "13px";
+      review.style.fontWeight = "bold";
+      review.style.color = reviewColor;
+
+      const icon = document.createElement("i");
+      icon.classList.add("fas", reviewIcon);
+      icon.style.marginRight = "6px";
+
+      review.appendChild(icon);
+      review.appendChild(document.createTextNode(`论文审核：${reviewText}`));
+
+      card.appendChild(review);
+
+      // 边框也感知审核状态
+      card.style.border = `1px solid ${reviewColor}`;
+    }
 
     // ==============================
     // 基本资料
@@ -506,34 +544,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const p2 = document.createElement("p");
     const phoneIcon = document.createElement("i");
-    phoneIcon.classList.add("fas", "fa-phone-alt"); // FontAwesome 电话图标
+    phoneIcon.classList.add("fas", "fa-phone-alt");
     p2.appendChild(phoneIcon);
-    p2.appendChild(document.createTextNode(` ${item.phone || "无"}`)); // 在图标后面显示文本
+    p2.appendChild(document.createTextNode(` ${item.phone || "无"}`));
     p2.style.margin = "4px 0";
     p2.style.fontSize = "13px";
-    p2.style.color = "#bbb"; // 暗色文本
+    p2.style.color = "#bbb";
     card.appendChild(p2);
 
     const p3 = document.createElement("p");
     const ageIcon = document.createElement("i");
-    ageIcon.classList.add("fas", "fa-birthday-cake"); // FontAwesome 生日蛋糕图标
+    ageIcon.classList.add("fas", "fa-birthday-cake");
     p3.appendChild(ageIcon);
     p3.appendChild(document.createTextNode(` ${item.age || "?"}岁`));
     p3.style.margin = "4px 0";
     p3.style.fontSize = "13px";
-    p3.style.color = "#bbb"; // 暗色文本
+    p3.style.color = "#bbb";
     card.appendChild(p3);
 
     const p4 = document.createElement("p");
     const docIcon = document.createElement("i");
-    docIcon.classList.add("fas", "fa-id-card"); // FontAwesome 身份证图标
+    docIcon.classList.add("fas", "fa-id-card");
     p4.appendChild(docIcon);
     p4.appendChild(
       document.createTextNode(` ${item.doc_type || ""}：${item.doc_no || ""}`)
     );
     p4.style.margin = "4px 0";
     p4.style.fontSize = "13px";
-    p4.style.color = "#bbb"; // 暗色文本
+    p4.style.color = "#bbb";
     card.appendChild(p4);
 
     return card;
@@ -676,8 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ["国家", item.country],
       ["年龄", item.age],
       ["紧急联系人", item.emergency_contact],
-      ["付款金额", `${item.payment_amount} ${item.payment_currency}`],
-      ["换算金额 (MYR)", item.payment_amount_myr],
+      ["付款金额", `RM${item.payment_amount}`],
       ["提交时间", item.created_at],
       ["病史", item.medical_information],
     ];
@@ -689,6 +726,142 @@ document.addEventListener("DOMContentLoaded", () => {
       p.style.color = "#ddd"; // 字体颜色调整为浅灰
       modal.appendChild(p);
     });
+    // ===============================
+    // ========== Paper Info =========
+    // ===============================
+    if (item.paper_presentation) {
+      // 是否投稿
+      const pp = document.createElement("p");
+      pp.innerHTML = `<strong>是否投稿：</strong> Yes`;
+      pp.style.margin = "6px 0";
+      pp.style.color = "#ddd";
+      modal.appendChild(pp);
+
+      // 论文标题
+      if (item.paper_title) {
+        const pt = document.createElement("p");
+        pt.innerHTML = `<strong>论文标题：</strong> ${item.paper_title}`;
+        pt.style.margin = "6px 0";
+        pt.style.color = "#ddd";
+        modal.appendChild(pt);
+      }
+
+      // 摘要
+      if (item.abstract) {
+        const ab = document.createElement("p");
+        ab.innerHTML = `<strong>摘要：</strong><br>${item.abstract.replace(
+          /\n/g,
+          "<br>"
+        )}`;
+        ab.style.margin = "6px 0";
+        ab.style.color = "#ccc";
+        ab.style.lineHeight = "1.5";
+        modal.appendChild(ab);
+      }
+    } else {
+      // 未投稿
+      const pp = document.createElement("p");
+      pp.innerHTML = `<strong>是否投稿：</strong> No`;
+      pp.style.margin = "6px 0";
+      pp.style.color = "#ddd";
+      modal.appendChild(pp);
+    }
+    // ===============================
+    // ========== Review Status ======
+    // ===============================
+    if (item.paper_presentation) {
+      const review = document.createElement("p");
+
+      let statusText = "⏳ 待审核";
+      let statusColor = "#f0ad4e"; // 橙色（待审）
+
+      if (item.validfy === true) {
+        statusText = "✅ 已通过审核";
+        statusColor = "#28a745"; // 绿色
+      } else if (item.validfy === false) {
+        statusText = "❌ 已拒绝审核";
+        statusColor = "#dc3545"; // 红色
+      }
+
+      review.innerHTML = `<strong>审核状态：</strong> ${statusText}`;
+      review.style.margin = "10px 0";
+      review.style.fontWeight = "bold";
+      review.style.color = statusColor;
+
+      modal.appendChild(review);
+    }
+
+    // ===============================
+    // ===== Review Action Buttons ====
+    // ===============================
+    if (item.paper_presentation) {
+      const actionBox = document.createElement("div");
+      actionBox.style.marginTop = "15px";
+      actionBox.style.display = "flex";
+      actionBox.style.gap = "12px";
+
+      // ✅ 通过审核（绿色）
+      const acceptBtn = document.createElement("button");
+      acceptBtn.textContent = "通过审核";
+      Object.assign(acceptBtn.style, {
+        padding: "8px 18px",
+        backgroundColor: "#28a745",
+        color: "#fff",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        fontWeight: "bold",
+      });
+
+      // ❌ 拒绝审核（红色）
+      const rejectBtn = document.createElement("button");
+      rejectBtn.textContent = "拒绝审核";
+      Object.assign(rejectBtn.style, {
+        padding: "8px 18px",
+        backgroundColor: "#dc3545",
+        color: "#fff",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        fontWeight: "bold",
+      });
+
+      // ===============================
+      // ===== API Calls ===============
+      // ===============================
+      const doReview = async (action) => {
+        const actionText = action === "accept" ? "通过" : "拒绝";
+        if (!confirm(`确定要【${actionText}】该投稿吗？`)) return;
+
+        const res = await fetch(`/wbc/register/${item.id}/review`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ action }),
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          alert(data.error || "操作失败");
+          return;
+        }
+
+        alert(data.message);
+
+        // 🔄 刷新当前 modal
+        overlay.remove();
+        generate_register_data_detail_modal(data.data);
+      };
+
+      acceptBtn.onclick = () => doReview("accept");
+      rejectBtn.onclick = () => doReview("reject");
+
+      actionBox.appendChild(acceptBtn);
+      actionBox.appendChild(rejectBtn);
+      modal.appendChild(actionBox);
+    }
 
     // ===============================
     // 付款截图

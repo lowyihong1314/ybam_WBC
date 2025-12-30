@@ -23,8 +23,6 @@ class RegisterData(db.Model):
     doc_type = db.Column(db.String(50))
 
     payment_amount = db.Column(db.Float)
-    payment_amount_myr = db.Column(db.Float)
-    payment_currency = db.Column(db.String(10))
 
     paper_presentation = db.Column(db.Boolean, default=False)
     paper_files = db.Column(db.Text)
@@ -32,6 +30,10 @@ class RegisterData(db.Model):
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     deleted = db.Column(db.Boolean, default=False)
+    
+    paper_title = db.Column(db.String(300), nullable=True)
+    abstract = db.Column(db.Text, nullable=True)
+    validfy = db.Column(db.Boolean, default=False)
 
     # ----------- 关系 ------------
     transactions = db.relationship(
@@ -56,15 +58,18 @@ class RegisterData(db.Model):
             "doc_type": self.doc_type,
 
             "payment_amount": self.payment_amount,
-            "payment_amount_myr": self.payment_amount_myr,
-            "payment_currency": self.payment_currency,
 
             "paper_presentation": self.paper_presentation,
+
+            # ⭐ 新增字段（可为 null）
+            "paper_title": self.paper_title,
+            "abstract": self.abstract,
+            "validfy": self.validfy,   # ✅ 新增
+
             "paper_files": json.loads(self.paper_files) if self.paper_files else [],
             "payment_doc": self.payment_doc,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
 
-            # 👍 自动返回 Transaction 历史
             "payment_transactions": [t.to_dict() for t in self.transactions]
         }
 

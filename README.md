@@ -1,3 +1,18 @@
+
+install and setup mariadb
+
+# (Add A "password.py" before you run that app)
+sql_username = "your mariadb username"
+sql_password = "your mariadb password"
+secret_key = "secretkey"
+MASTER_TOKEN = "12314gh4kj1hn2bg312311231232yj4"
+
+API_KEY = "cc52bcd5-4ade-489c-95aa-xxxxxxx"
+COLLECTION_ID = "xxxxxx"
+BASE = "https://www.billplz-sandbox.com/api"
+
+
+
 # 📌 YBAM Conference Registration System
 
 一个基于 Flask + Socket.IO + Eventlet + Gunicorn + Systemd 的线上报名系统，支持实时更新、文件上传、支付记录与后台管理界面。
@@ -15,8 +30,6 @@ Socket.IO 实时推送新报名数据
 管理端支持搜索、分页、导出 CSV
 
 Systemd 守护运行
-
-Rsync 部署同步（自动忽略特定目录）
 
 完整的虚拟环境隔离
 
@@ -77,21 +90,6 @@ sudo systemctl restart ybam.service
 
 sudo systemctl status ybam.service
 
-## 🔄 部署更新（Rsync）
-
-在服务器 /home/YBAM/ 执行：
-
-rsync -avz --delete \
-  --exclude='venv' \
-  --exclude='__pycache__' \
-  --exclude='.git' \
-  --exclude='instance' \
-  --exclude='uploads' \
-  --exclude='*.db' \
-  utba@utba.utbabuddha.com:/home/utba/flaskapp/YBAM/ \
-  .
-
-
 ## 🔁 更新后重启服务
 sudo systemctl restart ybam.service
 
@@ -130,33 +128,3 @@ venv 绝对不要上传
 
 使用 .gitignore 排除敏感文件
 
-## ✔ 建议再新增：deploy.sh
-
-你可以添加一个一键部署脚本：
-
-#!/bin/bash
-
-rsync -avz \
-  --exclude='venv' \
-  --exclude='__pycache__' \
-  --exclude='.git' \
-  --exclude='instance' \
-  --exclude='uploads' \
-  --exclude='*.db' \
-  utba@utba.utbabuddha.com:/home/utba/flaskapp/YBAM/ \
-  .
-
-sudo systemctl restart ybam.service
-echo "Deployment completed!"
-
-
-执行：
-
-chmod +x deploy.sh
-./deploy.sh
-
-
-git add .gitignore
-git add .
-git commit -m "更新"
-git push -u origin main --force
