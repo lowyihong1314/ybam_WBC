@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../images/logo/YBAM_logo.ico"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Young Buddhist Association of Malaysia</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo-section">
+          <img
+            src="https://ybam-wordpress-media.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2024/05/03162711/ybamlogo2.png"
+            alt="YBAM Logo"
+            onerror="this.src=''; this.alt='Logo failed to load'; this.style.display='none';"
+          />
+          <span class="tagline" id="tagline"
+            >Wisdom · Compassion · Gratitude</span
+          >
+        </div>
+        <nav>
+          <a href="#about">About Us</a>
+          <a href="../../">World Buddhist Conference</a>
+          <a href="../../register">Register Now</a>
+          <a href="#contact">Contact Us</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1 id="hero-title">Thank You</h1>
+      </div>
+    </section>
+
+    <section class="social-section" id="contact">
+      <h2>Follow Us</h2>
+      <div class="social-links">
+        <a
+          href="https://www.facebook.com/YBAMalaysia"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+        >
+          <span class="social-icon">📘</span>
+          <span>Facebook</span>
+        </a>
+        <a
+          href="https://www.youtube.com/c/YBAMalaysia"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+        >
+          <span class="social-icon">📺</span>
+          <span>YouTube</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p id="footer-text">
+        © 2024 Young Buddhist Association of Malaysia (YBAM). All rights
+        reserved.
+      </p>
+      <p>Young Buddhist Association of Malaysia</p>
+    </footer>
+
+    <script>
+      const defaultConfig = {
+        background_color: "#d4f1e8",
+        surface_color: "#e8f8f5",
+        text_color: "#2c5f2d",
+        primary_action_color: "#5fb88f",
+        secondary_action_color: "#4a9fd8",
+        font_family: "Segoe UI",
+        font_size: 16,
+        site_tagline: "Wisdom · Compassion · Gratitude",
+        hero_title: "Young Buddhist Association of Malaysia",
+        hero_subtitle:
+          "Guiding Malaysian Buddhist youth, promoting mindful living, and cultivating a society of wisdom, compassion, and gratitude",
+        cta_button: "Learn More",
+        about_title: "About YBAM",
+        mission_title: "Our Core Values",
+        footer_text:
+          "© 2024 Young Buddhist Association of Malaysia (YBAM). All rights reserved.",
+      };
+
+      async function onConfigChange(config) {
+        const backgroundColor =
+          config.background_color || defaultConfig.background_color;
+        const surfaceColor =
+          config.surface_color || defaultConfig.surface_color;
+        const textColor = config.text_color || defaultConfig.text_color;
+        const primaryActionColor =
+          config.primary_action_color || defaultConfig.primary_action_color;
+        const secondaryActionColor =
+          config.secondary_action_color || defaultConfig.secondary_action_color;
+        const fontFamily = config.font_family || defaultConfig.font_family;
+        const fontSize = config.font_size || defaultConfig.font_size;
+
+        // Apply colors
+        document.querySelector(
+          ".hero"
+        ).style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${surfaceColor} 100%)`;
+        document.querySelector(
+          ".stats"
+        ).style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+
+        const missionCards = document.querySelectorAll(".mission-card");
+        missionCards.forEach((card) => {
+          card.style.background = `linear-gradient(135deg, ${surfaceColor} 0%, ${backgroundColor} 100%)`;
+        });
+
+        const headers = document.querySelectorAll("h1, h2, h3");
+        headers.forEach((header) => {
+          header.style.color = textColor;
+        });
+
+        const ctaButton = document.querySelector(".cta-button");
+        ctaButton.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${secondaryActionColor} 100%)`;
+
+        const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach((link) => {
+          link.style.color = textColor;
+        });
+
+        // Apply fonts
+        const baseFontStack = "Tahoma, Geneva, Verdana, sans-serif";
+        document.body.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+
+        // Apply font sizes
+        document.querySelector(".hero h1").style.fontSize = `${fontSize * 3}px`;
+        document.querySelector(".hero p").style.fontSize = `${
+          fontSize * 1.3
+        }px`;
+        document.querySelectorAll(".about h2").forEach((h2) => {
+          h2.style.fontSize = `${fontSize * 2.5}px`;
+        });
+        document.querySelector(".about-text").style.fontSize = `${
+          fontSize * 1.1
+        }px`;
+        document.querySelectorAll(".mission-card h3").forEach((h3) => {
+          h3.style.fontSize = `${fontSize * 1.5}px`;
+        });
+
+        // Apply text content
+        document.getElementById("tagline").textContent =
+          config.site_tagline || defaultConfig.site_tagline;
+        document.getElementById("hero-title").textContent =
+          config.hero_title || defaultConfig.hero_title;
+        document.getElementById("hero-subtitle").textContent =
+          config.hero_subtitle || defaultConfig.hero_subtitle;
+        document.getElementById("cta-button").textContent =
+          config.cta_button || defaultConfig.cta_button;
+        document.getElementById("about-title").textContent =
+          config.about_title || defaultConfig.about_title;
+        document.getElementById("mission-title").textContent =
+          config.mission_title || defaultConfig.mission_title;
+        document.getElementById("footer-text").textContent =
+          config.footer_text || defaultConfig.footer_text;
+      }
+
+      function mapToCapabilities(config) {
+        return {
+          recolorables: [
+            {
+              get: () =>
+                config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              },
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              },
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              },
+            },
+            {
+              get: () =>
+                config.primary_action_color ||
+                defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              },
+            },
+            {
+              get: () =>
+                config.secondary_action_color ||
+                defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              },
+            },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            },
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            },
+          },
+        };
+      }
+
+      function mapToEditPanelValues(config) {
+        return new Map([
+          ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          [
+            "hero_subtitle",
+            config.hero_subtitle || defaultConfig.hero_subtitle,
+          ],
+          ["cta_button", config.cta_button || defaultConfig.cta_button],
+          ["about_title", config.about_title || defaultConfig.about_title],
+          [
+            "mission_title",
+            config.mission_title || defaultConfig.mission_title,
+          ],
+          ["footer_text", config.footer_text || defaultConfig.footer_text],
+        ]);
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues,
+        });
+      }
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'99d1f04f6676fc5d',t:'MTc2MjkwNzYxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+      window.onload = function () {
+        try_get_payment_feedback();
+      };
+
+      function try_get_payment_feedback() {
+        const params = new URLSearchParams(window.location.search);
+
+        const heroTitle = document.getElementById("hero-title");
+
+        // ✅ 1. Message 优先（例如论文审核等待）
+        const message =
+          params.get("message") ||
+          params.get("message_cn") ||
+          params.get("message_en");
+
+        if (message) {
+          heroTitle.textContent = message;
+          heroTitle.style.color = "green";
+          return;
+        }
+
+        // -----------------------------
+        // 2. 正常 Billplz 支付回调
+        // -----------------------------
+
+        // Basic: id（register_id）
+        const registerId = params.get("id");
+
+        // Billplz params
+        const billId = params.get("billplz[id]");
+        const paid = params.get("billplz[paid]");
+        const paidAt = params.get("billplz[paid_at]");
+        const signature = params.get("billplz[x_signature]");
+
+        console.log("REGISTER ID:", registerId);
+        console.log("BILL ID:", billId);
+        console.log("PAID:", paid);
+        console.log("PAID_AT:", paidAt);
+        console.log("SIGNATURE:", signature);
+
+        if (!billId) {
+          heroTitle.textContent = "Invalid Payment Response";
+          heroTitle.style.color = "red";
+          return;
+        }
+
+        // Billplz returns "true" or "false"
+        if (paid === "true") {
+          heroTitle.textContent = "Payment Successful 🎉";
+          heroTitle.style.color = "green";
+        } else {
+          heroTitle.textContent = "Payment Failed ❌";
+          heroTitle.style.color = "red";
+        }
+      }
+
+    </script>
+  </body>
+</html>
