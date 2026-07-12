@@ -344,41 +344,8 @@ def review_register_data(record_id):
         })), 400
 
     if action == "accept":
-        message = "审核已通过"
-
-        needs_accommodation_bill = (
-            normalize_version_name(record.version) == KL_DATA_VERSION
-            and (record.registration_group or "") in KL_PAID_GROUPS
-            and record.accommodation_required
-            and not record.accommodation_paid
-            and not record.accommodation_bill_id
-        )
-
-        if needs_accommodation_bill:
-            if not (record.email or "").strip():
-                return jsonify(versioned_payload({
-                    "success": False,
-                    "error": "该报名没有 Email，无法发送住宿付款账单",
-                    "error_type": "accommodation_missing_email"
-                })), 400
-
-            from function.payment_gateway import create_accommodation_bill
-
-            try:
-                bill = create_accommodation_bill(record)
-            except Exception as exc:
-                db.session.rollback()
-                return jsonify(versioned_payload({
-                    "success": False,
-                    "error": f"住宿账单创建失败，审核未生效，请重试：{exc}",
-                    "error_type": "accommodation_bill_failed"
-                })), 502
-
-            record.accommodation_bill_id = bill.get("id")
-            record.accommodation_bill_url = bill.get("url")
-            message = "审核已通过，住宿付款账单已发送至报名者邮箱"
-
         record.validfy = True
+        message = "审核已通过"
     else:
         record.validfy = False
         message = "审核已拒绝"

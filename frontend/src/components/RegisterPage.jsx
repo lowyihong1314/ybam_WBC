@@ -72,6 +72,8 @@ const KL_PRICE_TABLE = {
   },
 };
 
+const KL_ACCOMMODATION_FEE = 280;
+
 const FALLBACK_REGION_CODES = [
   "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ", "AR", "AS", "AT",
   "AU", "AW", "AX", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI",
@@ -464,7 +466,11 @@ export function RegisterPage({ forcedVersion }) {
     klNeedsExchange && exchangeRate
       ? Number((klOriginalAmount * exchangeRate.rate).toFixed(2))
       : klOriginalAmount;
-  const klAmount = selectedKlGroup.free ? 0 : klConvertedAmount;
+  const klAccommodationFee =
+    !selectedKlGroup.free && form.accommodation_required === "yes" ? KL_ACCOMMODATION_FEE : 0;
+  const klAmount = selectedKlGroup.free
+    ? 0
+    : Number((klConvertedAmount + klAccommodationFee).toFixed(2));
 
   useEffect(() => {
     document.documentElement.lang = config.htmlLang;
@@ -808,6 +814,9 @@ export function RegisterPage({ forcedVersion }) {
                       <div className="price-tile total">
                         <span>原价</span>
                         <strong>{klSelectedPrice.currency} {klSelectedPrice.amount}</strong>
+                        {klAccommodationFee > 0 ? (
+                          <small>住宿费：RM {klAccommodationFee.toFixed(2)}</small>
+                        ) : null}
                         {klNeedsExchange ? (
                           <small>
                             换算后付款金额：RM {exchangeRate ? klAmount.toFixed(2) : "-"}
@@ -939,7 +948,7 @@ export function RegisterPage({ forcedVersion }) {
                         </p>
                       ) : (
                         <p className="muted-copy">
-                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每人 RM280。报名审核通过后，您将收到 Billplz 住宿付款电邮，请通过邮件中的链接完成付款。
+                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每人 RM280。住宿费将与报名费合并，提交报名后一同通过 Billplz 付款。
                         </p>
                       )}
                     </div>

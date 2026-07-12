@@ -66,14 +66,14 @@ function getAccommodationState(record) {
   if (record.accommodation_bill_id) {
     return "bill_sent";
   }
-  return "awaiting_review";
+  return "unpaid";
 }
 
 const ACCOMMODATION_STATE_LABELS = {
   offline: "需要 · 线下安排",
   paid: "需要 · 已付款 (RM280)",
   bill_sent: "需要 · 账单已发送",
-  awaiting_review: "需要 · 待审核后发账单",
+  unpaid: "需要 · 未付款（随报名费收取）",
 };
 
 function getTransactionDetailEntries(transaction) {

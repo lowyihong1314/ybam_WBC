@@ -63,37 +63,8 @@ def post_billplz_bill(data):
     return payload
 
 
-ACCOMMODATION_FEE_MYR = 280
-
-
-def create_accommodation_bill(record):
-    version = normalize_version_name(record.version)
-    email = (record.email or "").strip()
-    name = record.name or record.name_cn or "Anonymous"
-
-    data = {
-        "collection_id": BILLPLZ_COLLECTION_ID,
-        "email": email,
-        "name": name,
-        "amount": int(ACCOMMODATION_FEE_MYR * 100),
-        "description": f"{version} Hotel Accommodation #{record.id}",
-
-        "redirect_url": external_url(
-            f"/static/templates/thankyou.html?id={record.id}&version={version}&purpose=accommodation"
-        ),
-        "callback_url": external_url(
-            f"/payment_gateway/callback?register_id={record.id}&version={version}&purpose=accommodation"
-        ),
-
-        "reference_1_label": "Purpose",
-        "reference_1": f"Accommodation RM{ACCOMMODATION_FEE_MYR}",
-        "reference_2_label": "Register ID",
-        "reference_2": record.id,
-        "reference_3_label": "Payer Email",
-        "reference_3": email,
-    }
-
-    return post_billplz_bill(data)
+# 住宿费随报名费合并在同一张 Billplz 账单收取，仅付费组别适用
+KL_PAID_GROUPS = {"vendor", "participant"}
 
 
 @payment_gateway_bp.route("/pay")
@@ -281,10 +252,19 @@ def callback():
 
         db.session.add(db_record)
 
-        if purpose == "accommodation" and paid:
+        if paid:
             record = RegisterData.query.filter_by(id=register_id, deleted=False).first()
-            if record:
-                record.accommodation_paid = True
+            if record and record.accommodation_required:
+                if purpose == "accommodation":
+                    # 旧流程遗留的独立住宿账单
+                    record.accommodation_paid = True
+                elif (
+                    purpose == "registration"
+                    and (record.registration_group or "") in KL_PAID_GROUPS
+                    and not record.accommodation_bill_id
+                ):
+                    # 新流程：住宿费已合并在报名费账单中一起支付
+                    record.accommodation_paid = True
 
         db.session.commit()
 
