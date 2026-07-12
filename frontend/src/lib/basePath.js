@@ -1,6 +1,23 @@
-const rawBaseUrl = import.meta.env.BASE_URL || "/";
+function getRuntimeBaseUrl() {
+  if (typeof window === "undefined") {
+    return "";
+  }
 
-export const basePath = rawBaseUrl.replace(/\/+$/, "");
+  return window.__YBAM_BASE_PATH__ || "";
+}
+
+function normalizeBasePath(value) {
+  if (!value || value === "/") {
+    return "";
+  }
+
+  const withLeadingSlash = value.startsWith("/") ? value : `/${value}`;
+  return withLeadingSlash.replace(/\/+$/, "");
+}
+
+const rawBaseUrl = getRuntimeBaseUrl() || import.meta.env.BASE_URL || "/";
+
+export const basePath = normalizeBasePath(rawBaseUrl);
 
 export function withBasePath(path = "/") {
   if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(path)) {

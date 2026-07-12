@@ -131,9 +131,9 @@ export const versionConfigs = {
       ],
       studentPrompt: "是否为学生",
       successPaperCn:
-        "资料已成功提交。工作人员将尽快审核论文材料，并在审核完成后通过电子邮件通知后续安排，请耐心等待。",
+        "报名成功，期待相遇！感谢你的信任与参与。我们已经准备好迎接你的到来，不见不散！",
       successPaperEn:
-        "Your submission has been received successfully. Our staff will review your paper materials and contact you by email for the next steps.",
+        "Registration successful! We look forward to meeting you. Thank you for your trust and participation. See you there!",
     },
   },
   [PENANG_VERSION]: {

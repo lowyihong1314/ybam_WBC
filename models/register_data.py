@@ -22,8 +22,26 @@ class RegisterData(db.Model):
     medical_information = db.Column(db.Text)
     emergency_contact = db.Column(db.String(255))
     doc_type = db.Column(db.String(50))
+    registration_group = db.Column(db.String(50))
+    gender = db.Column(db.String(20))
+    state_region = db.Column(db.String(100))
+    organization = db.Column(db.String(200))
+    project_name = db.Column(db.String(255))
+    helper_count = db.Column(db.Integer)
+    helper_names = db.Column(db.Text)
+    special_request = db.Column(db.Text)
+
+    accommodation_required = db.Column(db.Boolean, default=False)
+    roommate_name = db.Column(db.String(100))
+    roommate_doc_no = db.Column(db.String(50))
 
     payment_amount = db.Column(db.Float)
+    payment_currency = db.Column(db.String(10))
+    participant_category = db.Column(db.String(50))
+    original_payment_amount = db.Column(db.Float)
+    original_payment_currency = db.Column(db.String(10))
+    exchange_rate = db.Column(db.Float)
+    exchange_rate_date = db.Column(db.String(20))
 
     paper_presentation = db.Column(db.Boolean, default=False)
     paper_files = db.Column(db.Text)
@@ -67,8 +85,26 @@ class RegisterData(db.Model):
             "medical_information": self.medical_information,
             "emergency_contact": self.emergency_contact,
             "doc_type": self.doc_type,
+            "registration_group": self.registration_group,
+            "gender": self.gender,
+            "state_region": self.state_region,
+            "organization": self.organization,
+            "project_name": self.project_name,
+            "helper_count": self.helper_count,
+            "helper_names": self.helper_names,
+            "special_request": self.special_request,
+
+            "accommodation_required": self.accommodation_required,
+            "roommate_name": self.roommate_name,
+            "roommate_doc_no": self.roommate_doc_no,
 
             "payment_amount": self.payment_amount,
+            "payment_currency": self.payment_currency,
+            "participant_category": self.participant_category,
+            "original_payment_amount": self.original_payment_amount,
+            "original_payment_currency": self.original_payment_currency,
+            "exchange_rate": self.exchange_rate,
+            "exchange_rate_date": self.exchange_rate_date,
 
             "paper_presentation": self.paper_presentation,
 

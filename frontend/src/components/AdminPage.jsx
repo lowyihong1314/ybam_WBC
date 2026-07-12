@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 
 import {
   buildProtectedAssetUrl,
+  createManualBill,
   deleteRecord,
   fetchRegisterData,
   loginWithToken,
@@ -18,13 +19,19 @@ import {
 
 const STORAGE_KEY = "ybam_backend_token";
 const PAGE_SIZE = 8;
+const INITIAL_MANUAL_PAYMENT_FORM = {
+  amount_myr: "",
+  name: "",
+  email: "",
+  description: "",
+};
 
-function formatAmount(value) {
+function formatAmount(value, currency = "RM") {
   if (value === null || value === undefined || value === "") {
     return "-";
   }
 
-  return `RM ${Number(value).toFixed(2)}`;
+  return `${currency || "RM"} ${Number(value).toFixed(2)}`;
 }
 
 function getTransactionState(record) {
@@ -106,6 +113,9 @@ export function AdminPage() {
   const [deleteError, setDeleteError] = useState("");
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [copyMessage, setCopyMessage] = useState("");
+  const [manualPaymentForm, setManualPaymentForm] = useState(INITIAL_MANUAL_PAYMENT_FORM);
+  const [manualPaymentLoading, setManualPaymentLoading] = useState(false);
+  const [manualPaymentError, setManualPaymentError] = useState("");
 
   useEffect(() => {
     document.documentElement.lang = "en";
@@ -293,6 +303,8 @@ export function AdminPage() {
     setVersion("");
     setRoom("");
     setRecords([]);
+    setManualPaymentForm(INITIAL_MANUAL_PAYMENT_FORM);
+    setManualPaymentError("");
     setSelected(null);
     setPage(1);
     setContextMenu(null);
@@ -353,6 +365,27 @@ export function AdminPage() {
       setContextMenu(null);
     } catch (err) {
       setError(err.payload?.error || err.message || "Review failed.");
+    }
+  }
+
+  async function handleCreateManualBill(event) {
+    event.preventDefault();
+
+    try {
+      setManualPaymentLoading(true);
+      setManualPaymentError("");
+      const payload = await createManualBill(token, {
+        amount_myr: manualPaymentForm.amount_myr,
+        name: manualPaymentForm.name.trim(),
+        email: manualPaymentForm.email.trim(),
+        description: manualPaymentForm.description.trim(),
+      });
+
+      window.location.href = payload.bill_url;
+    } catch (err) {
+      setManualPaymentError(err.payload?.error || err.message || "Payment gateway creation failed.");
+    } finally {
+      setManualPaymentLoading(false);
     }
   }
 
@@ -489,6 +522,81 @@ export function AdminPage() {
             </article>
           </section>
 
+          <section className="admin-panel">
+            <div className="admin-panel-header">
+              <div>
+                <p className="eyebrow">Payment Gateway</p>
+                <h2>其他收款</h2>
+              </div>
+              {manualPaymentLoading ? <span className="status-note">Creating bill...</span> : null}
+            </div>
+
+            <form className="manual-payment-form" onSubmit={handleCreateManualBill}>
+              <label>
+                <span>Amount (RM)</span>
+                <input
+                  min="0.01"
+                  required
+                  step="0.01"
+                  type="number"
+                  value={manualPaymentForm.amount_myr}
+                  onChange={(event) =>
+                    setManualPaymentForm((current) => ({
+                      ...current,
+                      amount_myr: event.target.value,
+                    }))
+                  }
+                  placeholder="100.00"
+                />
+              </label>
+              <label>
+                <span>Payer name</span>
+                <input
+                  value={manualPaymentForm.name}
+                  onChange={(event) =>
+                    setManualPaymentForm((current) => ({
+                      ...current,
+                      name: event.target.value,
+                    }))
+                  }
+                  placeholder="Optional"
+                />
+              </label>
+              <label>
+                <span>Email</span>
+                <input
+                  type="email"
+                  value={manualPaymentForm.email}
+                  onChange={(event) =>
+                    setManualPaymentForm((current) => ({
+                      ...current,
+                      email: event.target.value,
+                    }))
+                  }
+                  placeholder="Optional"
+                />
+              </label>
+              <label>
+                <span>Description</span>
+                <input
+                  value={manualPaymentForm.description}
+                  onChange={(event) =>
+                    setManualPaymentForm((current) => ({
+                      ...current,
+                      description: event.target.value,
+                    }))
+                  }
+                  placeholder="Other collection"
+                />
+              </label>
+              <button className="primary-button" disabled={manualPaymentLoading} type="submit">
+                Pay
+              </button>
+            </form>
+
+            {manualPaymentError ? <p className="form-error">{manualPaymentError}</p> : null}
+          </section>
+
           <section className="backend-controls">
             <input
               className="search-input"
@@ -545,6 +653,10 @@ export function AdminPage() {
                       <strong>{selected.doc_type} / {selected.doc_no || "-"}</strong>
                     </div>
                     <div>
+                      <span>Registration Group</span>
+                      <strong>{selected.registration_group || "-"}</strong>
+                    </div>
+                    <div>
                       <span>Phone</span>
                       <strong>{selected.phone || "-"}</strong>
                     </div>
@@ -558,13 +670,82 @@ export function AdminPage() {
                     </div>
                     <div>
                       <span>Fee</span>
-                      <strong>{formatAmount(selected.payment_amount)}</strong>
+                      <strong>{formatAmount(selected.payment_amount, selected.payment_currency)}</strong>
+                    </div>
+                    <div>
+                      <span>Participant Category</span>
+                      <strong>{selected.participant_category || "-"}</strong>
+                    </div>
+                    <div>
+                      <span>Original Amount</span>
+                      <strong>
+                        {selected.original_payment_amount
+                          ? formatAmount(selected.original_payment_amount, selected.original_payment_currency)
+                          : "-"}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>Exchange Rate</span>
+                      <strong>
+                        {selected.exchange_rate
+                          ? `1 ${selected.original_payment_currency || "USD"} = RM ${selected.exchange_rate}`
+                          : "-"}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>Exchange Date</span>
+                      <strong>{selected.exchange_rate_date || "-"}</strong>
                     </div>
                     <div>
                       <span>Paper</span>
                       <strong>{selected.paper_presentation ? "Yes" : "No"}</strong>
                     </div>
                   </div>
+
+                  {selected.organization || selected.state_region || selected.project_name ? (
+                    <section className="detail-section">
+                      <h3>KL details</h3>
+                      <div className="detail-grid">
+                        <div>
+                          <span>Gender</span>
+                          <strong>{selected.gender || "-"}</strong>
+                        </div>
+                        <div>
+                          <span>State / Region</span>
+                          <strong>{selected.state_region || "-"}</strong>
+                        </div>
+                        <div>
+                          <span>Organization</span>
+                          <strong>{selected.organization || "-"}</strong>
+                        </div>
+                        <div>
+                          <span>Project</span>
+                          <strong>{selected.project_name || "-"}</strong>
+                        </div>
+                        <div>
+                          <span>Accommodation</span>
+                          <strong>{selected.accommodation_required ? "需要" : "-"}</strong>
+                        </div>
+                        <div>
+                          <span>Roommate</span>
+                          <strong>
+                            {selected.roommate_name
+                              ? `${selected.roommate_name}（${selected.roommate_doc_no || "-"}）`
+                              : "-"}
+                          </strong>
+                        </div>
+                        <div>
+                          <span>Helper count</span>
+                          <strong>{selected.helper_count ?? "-"}</strong>
+                        </div>
+                        <div>
+                          <span>Special request</span>
+                          <strong>{selected.special_request || "-"}</strong>
+                        </div>
+                      </div>
+                      {selected.helper_names ? <p>{selected.helper_names}</p> : null}
+                    </section>
+                  ) : null}
 
                   {selected.paper_title ? (
                     <section className="detail-section">
@@ -687,7 +868,7 @@ export function AdminPage() {
                         <p>{record.country || "-"}</p>
                         <div className="record-meta-row">
                           <span>{record.created_at}</span>
-                          <span>{formatAmount(record.payment_amount)}</span>
+                          <span>{formatAmount(record.payment_amount, record.payment_currency)}</span>
                         </div>
                       </button>
                     );

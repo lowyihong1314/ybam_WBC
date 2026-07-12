@@ -46,6 +46,25 @@ export async function fetchRegisterData(token) {
   return parseJson(response);
 }
 
+export async function fetchExchangeRate(currency) {
+  const response = await fetch(withBasePath(`/wbc/exchange_rate/${encodeURIComponent(currency)}`));
+
+  return parseJson(response);
+}
+
+export async function createManualBill(token, payload) {
+  const response = await fetch(withBasePath("/payment_gateway/manual_bill"), {
+    method: "POST",
+    headers: {
+      ...JSON_HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return parseJson(response);
+}
+
 export async function submitRegistration(formData) {
   const response = await fetch(withBasePath("/wbc/register"), {
     method: "POST",
@@ -81,22 +100,8 @@ export async function deleteRecord(token, id) {
 
 export async function fetchCountryDialCodes() {
   try {
-    const response = await fetch(
-      "https://restcountries.com/v3.1/all?fields=name,idd",
-    );
-    const countries = await response.json();
-    const result = {};
-
-    countries.forEach((country) => {
-      const name = country.name?.common;
-      const root = country.idd?.root;
-      const suffix = country.idd?.suffixes?.[0];
-      if (name && root && suffix) {
-        result[name] = `${root}${suffix}`;
-      }
-    });
-
-    return result;
+    const payload = await fetch(withBasePath("/wbc/country_dial_codes")).then(parseJson);
+    return payload.data || {};
   } catch (error) {
     return {
       Malaysia: "+60",

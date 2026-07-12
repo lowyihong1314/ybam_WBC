@@ -1,8 +1,10 @@
 # function/__init__.py
-from flask import Flask, redirect, request, send_file, send_from_directory
+from flask import Flask, Response, redirect, request, send_file, send_from_directory
+from flask_migrate import Migrate
 from function.wbc import wbc_bp
 from function.guest_and_member import guest_and_member_bp
 from function.payment_gateway import payment_gateway_bp
+import json
 import os
 from models import db
 from function.socket_init import socketio
@@ -13,6 +15,9 @@ from function.config import (
 )
 from function.settings import SECRET_KEY
 from function.versioning import VALID_VERSION_NAMES
+
+CANONICAL_FRONTEND_BASE = "/YBAM_WBC"
+FRONTEND_BASE_ALIASES = (f"{CANONICAL_FRONTEND_BASE}/", "/ybam_wbc/")
 
 def create_app():
     app = Flask(__name__)
@@ -25,6 +30,11 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = int(os.environ.get("MAX_CONTENT_LENGTH", 16 * 1024 * 1024))
 
     db.init_app(app)
+    Migrate(
+        app,
+        db,
+        directory=os.path.join(os.path.dirname(os.path.dirname(__file__)), "migrations"),
+    )
 
     with app.app_context():
         configure_sqlite_engine(db.engine)
@@ -43,7 +53,29 @@ def create_app():
 
     def serve_frontend_index():
         if has_frontend_dist():
-            return send_from_directory(frontend_dist, 'index.html')
+            prefix = request.headers.get('X-Forwarded-Prefix', '').rstrip('/')
+            if not prefix:
+                return send_from_directory(frontend_dist, 'index.html')
+
+            with open(frontend_index, encoding='utf-8') as index_file:
+                html = index_file.read()
+
+            prefix_base = f'{prefix}/'
+            for base_alias in FRONTEND_BASE_ALIASES:
+                html = html.replace(base_alias, prefix_base)
+
+            runtime_config = (
+                '<script>'
+                f'window.__YBAM_BASE_PATH__ = {json.dumps(prefix)};'
+                '</script>'
+            )
+            module_marker = '<script type="module"'
+            if module_marker in html:
+                html = html.replace(module_marker, f'{runtime_config}\n    {module_marker}', 1)
+            else:
+                html = html.replace('</head>', f'    {runtime_config}\n  </head>', 1)
+
+            return Response(html, mimetype='text/html')
 
         file_path = os.path.join('static', 'templates', 'index.html')
         return send_file(file_path)

@@ -6,13 +6,11 @@ eventlet.monkey_patch()
 import os
 
 from function import create_app, socketio
-from models import db
-from models.schema_migration import ensure_version_columns
+from models.schema_migration import apply_migrations
 
 app = create_app()
 with app.app_context():
-    db.create_all()
-    ensure_version_columns()
+    apply_migrations()
 
 # 仅在直接运行 python run.py 时生效
 if __name__ == '__main__':

@@ -109,13 +109,11 @@ set +a
 
 venv/bin/python - <<'PY'
 from function import create_app
-from models import db
-from models.schema_migration import ensure_version_columns
+from models.schema_migration import apply_migrations
 
 app = create_app()
 with app.app_context():
-    db.create_all()
-    ensure_version_columns()
+    apply_migrations()
 print("schema migration ok")
 PY
 

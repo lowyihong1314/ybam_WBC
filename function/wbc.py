@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify, send_file, g
 from functools import wraps
+from datetime import datetime, timezone
 from models import db
 from models.register_data import RegisterData
 import secrets
 import os, json
+import requests
 from function.config import flask_path
 from function.socket_init import socketio
 from function.versioning import (
@@ -25,6 +27,16 @@ wbc_bp = Blueprint("wbc", __name__)
 ACTIVE_SESSIONS = {}
 
 SESSION_EXPIRE_TIME = 60 * 60 * 4  # 会话有效期 4 小时
+KL_FREE_GROUPS = {"monastic", "academic_presenter", "creative_presenter"}
+KL_PAID_GROUPS = {"vendor", "participant"}
+DATA_GOV_EXCHANGE_RATE_URL = "https://api.data.gov.my/data-catalogue/"
+COUNTRY_DIAL_CODES_URL = "https://restcountries.com/v3.1/all"
+EXCHANGE_RATE_CACHE_PATH = os.path.join(flask_path, "instance", "exchange_rate_cache.json")
+DEFAULT_COUNTRY_DIAL_CODES = {
+    "Malaysia": "+60",
+    "Singapore": "+65",
+    "China": "+86",
+}
 
 @wbc_bp.route("/login_with_token", methods=["POST"])
 def login_with_token():
@@ -82,6 +94,183 @@ def get_all_register_data():
     except Exception as e:
         db.session.rollback()
         return jsonify(versioned_payload({"success": False, "error": str(e)})), 500
+
+
+def parse_optional_int(value):
+    if value in (None, ""):
+        return None
+
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return None
+
+    return parsed if parsed > 0 else None
+
+
+def parse_optional_float(value):
+    if value in (None, ""):
+        return None
+
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def utc_now_iso():
+    return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def read_exchange_rate_cache():
+    try:
+        with open(EXCHANGE_RATE_CACHE_PATH, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        return None
+
+
+def write_exchange_rate_cache(payload):
+    os.makedirs(os.path.dirname(EXCHANGE_RATE_CACHE_PATH), exist_ok=True)
+    temp_path = f"{EXCHANGE_RATE_CACHE_PATH}.tmp"
+    with open(temp_path, "w", encoding="utf-8") as file:
+        json.dump(payload, file, ensure_ascii=False, indent=2)
+    os.replace(temp_path, EXCHANGE_RATE_CACHE_PATH)
+
+
+def cached_exchange_rate_response(error=None):
+    cached = read_exchange_rate_cache()
+    if not cached:
+        return None
+
+    payload = {
+        **cached,
+        "success": True,
+        "fallback": True,
+    }
+    if error:
+        payload["warning"] = "Live exchange rate lookup failed; using the last saved rate."
+
+    return jsonify(versioned_payload(payload))
+
+
+@wbc_bp.route("/exchange_rate/<currency>", methods=["GET"])
+def get_exchange_rate(currency):
+    normalized_currency = (currency or "").strip().upper()
+    if normalized_currency != "USD":
+        return jsonify(versioned_payload({
+            "success": False,
+            "error": "Only USD exchange rate is currently supported",
+        })), 400
+
+    params = {
+        "id": "exchangerates_daily_0900",
+        "limit": 9,
+        "sort": "-date",
+    }
+
+    lookup_error = None
+
+    try:
+        response = requests.get(DATA_GOV_EXCHANGE_RATE_URL, params=params, timeout=12)
+        response.raise_for_status()
+        payload = response.json()
+    except (requests.RequestException, ValueError) as exc:
+        lookup_error = f"Unable to fetch exchange rate: {exc}"
+        cached = cached_exchange_rate_response(lookup_error)
+        if cached:
+            return cached
+        return jsonify(versioned_payload({"success": False, "error": lookup_error})), 502
+
+    if not isinstance(payload, list):
+        lookup_error = "Exchange rate API returned an unexpected response"
+        cached = cached_exchange_rate_response(lookup_error)
+        if cached:
+            return cached
+        return jsonify(versioned_payload({"success": False, "error": lookup_error})), 502
+
+    rate = next(
+        (
+            item
+            for item in payload
+            if item.get("rate_type") == "middle" and item.get(normalized_currency.lower()) is not None
+        ),
+        None,
+    )
+
+    if not rate:
+        lookup_error = "Exchange rate API did not return a usable USD/MYR middle rate"
+        cached = cached_exchange_rate_response(lookup_error)
+        if cached:
+            return cached
+        return jsonify(versioned_payload({"success": False, "error": lookup_error})), 502
+
+    exchange_payload = {
+        "success": True,
+        "currency": normalized_currency,
+        "quote": "MYR",
+        "rate": float(rate[normalized_currency.lower()]),
+        "rate_type": "middle",
+        "date": rate.get("date"),
+        "rate_time": "09:00 MYT",
+        "rate_datetime": f"{rate.get('date')} 09:00 MYT" if rate.get("date") else None,
+        "last_updated": rate.get("date"),
+        "fetched_at": utc_now_iso(),
+        "fallback": False,
+        "source": "data.gov.my / Bank Negara Malaysia",
+        "source_url": "https://data.gov.my/data-catalogue/exchangerates_daily_0900",
+    }
+
+    try:
+        write_exchange_rate_cache(exchange_payload)
+    except OSError:
+        pass
+
+    return jsonify(versioned_payload(exchange_payload))
+
+
+@wbc_bp.route("/country_dial_codes", methods=["GET"])
+def get_country_dial_codes():
+    try:
+        response = requests.get(
+            COUNTRY_DIAL_CODES_URL,
+            params={"fields": "name,idd"},
+            timeout=12,
+        )
+        response.raise_for_status()
+        countries = response.json()
+    except (requests.RequestException, ValueError):
+        return jsonify(versioned_payload({
+            "success": True,
+            "data": DEFAULT_COUNTRY_DIAL_CODES,
+            "fallback": True,
+        }))
+
+    if not isinstance(countries, list):
+        return jsonify(versioned_payload({
+            "success": True,
+            "data": DEFAULT_COUNTRY_DIAL_CODES,
+            "fallback": True,
+        }))
+
+    result = {}
+    for country in countries:
+        if not isinstance(country, dict):
+            continue
+
+        name = ((country.get("name") or {}).get("common") or "").strip()
+        idd = country.get("idd") or {}
+        root = idd.get("root")
+        suffixes = idd.get("suffixes") or []
+        suffix = suffixes[0] if suffixes else None
+        if name and root and suffix:
+            result[name] = f"{root}{suffix}"
+
+    return jsonify(versioned_payload({
+        "success": True,
+        "data": result or DEFAULT_COUNTRY_DIAL_CODES,
+        "fallback": not bool(result),
+    }))
 
 
 @wbc_bp.route("/export_all_data", methods=["GET"])
@@ -251,9 +440,114 @@ def register():
             payment_amount = None
 
         # =============================
-        # Paper presentation?
+        # Registration group / free access
         # =============================
+        registration_group = (form.get("registration_group") or "").strip()
         paper_present = form.get("paper_presentation") == "true"
+        if public_version == KL_DATA_VERSION and registration_group not in (KL_FREE_GROUPS | KL_PAID_GROUPS):
+            return jsonify(
+                versioned_payload(
+                    {
+                        "success": False,
+                        "error": "请选择有效的报名组别",
+                        "error_type": "invalid_registration_group",
+                    },
+                    version=public_version,
+                )
+            ), 400
+
+        if public_version == KL_DATA_VERSION and registration_group == "vendor":
+            required_vendor_fields = {
+                "country": "国籍",
+                "state_region": "目前所在州属 / 地区",
+                "phone": "联络号码",
+                "project_name": "所负责摊位的创意教学项目名称",
+            }
+            missing_vendor_fields = [
+                label
+                for key, label in required_vendor_fields.items()
+                if not (form.get(key) or "").strip()
+            ]
+            if missing_vendor_fields:
+                return jsonify(
+                    versioned_payload(
+                        {
+                            "success": False,
+                            "error": f"摊主 / 摊位协助人员报名缺少资料：{', '.join(missing_vendor_fields)}",
+                            "error_type": "missing_vendor_profile",
+                        },
+                        version=public_version,
+                    )
+                ), 400
+
+        is_kl_free_registration = (
+            public_version == KL_DATA_VERSION and registration_group in KL_FREE_GROUPS
+        )
+
+        if is_kl_free_registration:
+            payment_amount = 0
+
+        # =============================
+        # Monastic hotel accommodation
+        # =============================
+        accommodation_required = False
+        roommate_name = None
+        roommate_doc_no = None
+
+        if public_version == KL_DATA_VERSION and registration_group == "monastic":
+            accommodation_required = form.get("accommodation_required") == "true"
+
+            if accommodation_required:
+                if not (form.get("doc_no") or "").strip():
+                    return jsonify(
+                        versioned_payload(
+                            {
+                                "success": False,
+                                "error": "申请住宿需要填写身份证号码（IC）/ 护照号码",
+                                "error_type": "missing_accommodation_doc_no",
+                            },
+                            version=public_version,
+                        )
+                    ), 400
+
+                roommate_name = (form.get("roommate_name") or "").strip() or None
+                roommate_doc_no = (form.get("roommate_doc_no") or "").strip() or None
+
+                if roommate_name and not roommate_doc_no:
+                    return jsonify(
+                        versioned_payload(
+                            {
+                                "success": False,
+                                "error": "请填写同房对象的身份证号码（IC）/ 护照号码",
+                                "error_type": "missing_roommate_doc_no",
+                            },
+                            version=public_version,
+                        )
+                    ), 400
+
+        if public_version == KL_DATA_VERSION and registration_group in KL_PAID_GROUPS:
+            if payment_amount is None or payment_amount <= 0:
+                return jsonify(
+                    versioned_payload(
+                        {
+                            "success": False,
+                            "error": "付费报名组别缺少有效付款金额",
+                            "error_type": "invalid_payment_amount",
+                        },
+                        version=public_version,
+                    )
+                ), 400
+            if (form.get("payment_currency") or "RM").upper() != "RM":
+                return jsonify(
+                    versioned_payload(
+                        {
+                            "success": False,
+                            "error": "付费金额必须先换算成 MYR 后才能提交 Billplz",
+                            "error_type": "payment_currency_must_be_myr",
+                        },
+                        version=public_version,
+                    )
+                ), 400
 
         # =============================
         # Save payment_doc
@@ -272,8 +566,8 @@ def register():
         # Write to DB (initial)
         # =============================
         new_record = RegisterData(
-            doc_no=form.get("doc_no"),
-            name=form.get("name"),
+            doc_no=form.get("doc_no") or f"{registration_group or 'KL'}-{secrets.token_hex(6)}",
+            name=form.get("name") or form.get("dharma_name") or form.get("name_cn"),
             name_cn=form.get("name_cn"),
             phone=form.get("phone"),
             email=form.get("email"),
@@ -281,9 +575,27 @@ def register():
             age=form.get("age"),
             medical_information=form.get("medical_information"),
             emergency_contact=form.get("emergency_contact"),
-            doc_type=form.get("doc_type"),
+            doc_type=form.get("doc_type") or "Internal",
+            registration_group=registration_group or None,
+            gender=form.get("gender"),
+            state_region=form.get("state_region"),
+            organization=form.get("organization"),
+            project_name=form.get("project_name"),
+            helper_count=parse_optional_int(form.get("helper_count")),
+            helper_names=form.get("helper_names"),
+            special_request=form.get("special_request"),
+
+            accommodation_required=accommodation_required,
+            roommate_name=roommate_name,
+            roommate_doc_no=roommate_doc_no,
 
             payment_amount=payment_amount,
+            payment_currency=(form.get("payment_currency") or "RM").upper(),
+            participant_category=form.get("participant_category"),
+            original_payment_amount=parse_optional_float(form.get("original_payment_amount")),
+            original_payment_currency=(form.get("original_payment_currency") or "").upper() or None,
+            exchange_rate=parse_optional_float(form.get("exchange_rate")),
+            exchange_rate_date=form.get("exchange_rate_date"),
 
             paper_presentation=paper_present,
             paper_title=form.get("paper_title"),
