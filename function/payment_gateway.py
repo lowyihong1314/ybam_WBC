@@ -63,6 +63,39 @@ def post_billplz_bill(data):
     return payload
 
 
+ACCOMMODATION_FEE_MYR = 280
+
+
+def create_accommodation_bill(record):
+    version = normalize_version_name(record.version)
+    email = (record.email or "").strip()
+    name = record.name or record.name_cn or "Anonymous"
+
+    data = {
+        "collection_id": BILLPLZ_COLLECTION_ID,
+        "email": email,
+        "name": name,
+        "amount": int(ACCOMMODATION_FEE_MYR * 100),
+        "description": f"{version} Hotel Accommodation #{record.id}",
+
+        "redirect_url": external_url(
+            f"/static/templates/thankyou.html?id={record.id}&version={version}&purpose=accommodation"
+        ),
+        "callback_url": external_url(
+            f"/payment_gateway/callback?register_id={record.id}&version={version}&purpose=accommodation"
+        ),
+
+        "reference_1_label": "Purpose",
+        "reference_1": f"Accommodation RM{ACCOMMODATION_FEE_MYR}",
+        "reference_2_label": "Register ID",
+        "reference_2": record.id,
+        "reference_3_label": "Payer Email",
+        "reference_3": email,
+    }
+
+    return post_billplz_bill(data)
+
+
 @payment_gateway_bp.route("/pay")
 def create_bill():
 
@@ -242,10 +275,17 @@ def callback():
             bill_id=bill_id,
             paid=paid,
             raw_json=json.dumps(final_json, ensure_ascii=False),
+            purpose=purpose,
             version=version
         )
 
         db.session.add(db_record)
+
+        if purpose == "accommodation" and paid:
+            record = RegisterData.query.filter_by(id=register_id, deleted=False).first()
+            if record:
+                record.accommodation_paid = True
+
         db.session.commit()
 
         print(f"💾 支付数据写入数据库 PaymentTransaction, ID={db_record.id}")

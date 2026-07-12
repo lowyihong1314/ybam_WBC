@@ -34,10 +34,14 @@ function formatAmount(value, currency = "RM") {
   return `${currency || "RM"} ${Number(value).toFixed(2)}`;
 }
 
+function isAccommodationTransaction(transaction) {
+  return (transaction?.purpose || transaction?.raw_json?.purpose) === "accommodation";
+}
+
 function getTransactionState(record) {
-  const transactions = [...(record.payment_transactions || [])].sort(
-    (left, right) => (right.id || 0) - (left.id || 0),
-  );
+  const transactions = [...(record.payment_transactions || [])]
+    .filter((item) => !isAccommodationTransaction(item))
+    .sort((left, right) => (right.id || 0) - (left.id || 0));
 
   const latest = transactions.find((item) => item?.raw_json?.bill_data?.state || item?.paid !== undefined);
   if (!latest) {
@@ -47,11 +51,37 @@ function getTransactionState(record) {
   return latest.raw_json?.bill_data?.state || (latest.paid ? "paid" : "pending");
 }
 
+const FREE_REGISTRATION_GROUPS = new Set(["monastic", "academic_presenter", "creative_presenter"]);
+
+function getAccommodationState(record) {
+  if (!record?.accommodation_required) {
+    return null;
+  }
+  if (FREE_REGISTRATION_GROUPS.has(record.registration_group)) {
+    return "offline";
+  }
+  if (record.accommodation_paid) {
+    return "paid";
+  }
+  if (record.accommodation_bill_id) {
+    return "bill_sent";
+  }
+  return "awaiting_review";
+}
+
+const ACCOMMODATION_STATE_LABELS = {
+  offline: "需要 · 线下安排",
+  paid: "需要 · 已付款 (RM280)",
+  bill_sent: "需要 · 账单已发送",
+  awaiting_review: "需要 · 待审核后发账单",
+};
+
 function getTransactionDetailEntries(transaction) {
   const billData = transaction?.raw_json?.bill_data || {};
 
   return [
     ["Transaction ID", transaction?.id || "-"],
+    ["Purpose", transaction?.purpose || transaction?.raw_json?.purpose || "registration"],
     ["Bill ID", transaction?.bill_id || billData.id || "-"],
     ["Register ID", transaction?.register_id || transaction?.raw_json?.register_id || "-"],
     ["State", billData.state || (transaction?.paid ? "paid" : "pending")],
@@ -343,6 +373,23 @@ export function AdminPage() {
       }, 2200);
     } catch {
       setCopyMessage(repaymentUrl);
+    }
+  }
+
+  async function handleCopyAccommodationBillUrl() {
+    const billUrl = selected?.accommodation_bill_url;
+    if (!billUrl) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(billUrl);
+      setCopyMessage("Accommodation bill URL copied.");
+      window.setTimeout(() => {
+        setCopyMessage("");
+      }, 2200);
+    } catch {
+      setCopyMessage(billUrl);
     }
   }
 
@@ -644,6 +691,11 @@ export function AdminPage() {
                       <button className="delete-button" onClick={openDeleteConfirm} type="button">
                         Delete
                       </button>
+                      {selected.accommodation_bill_url ? (
+                        <button className="ghost-button" onClick={handleCopyAccommodationBillUrl} type="button">
+                          Copy accommodation bill URL
+                        </button>
+                      ) : null}
                     </div>
                   </div>
 
@@ -724,7 +776,11 @@ export function AdminPage() {
                         </div>
                         <div>
                           <span>Accommodation</span>
-                          <strong>{selected.accommodation_required ? "需要" : "-"}</strong>
+                          <strong>
+                            {getAccommodationState(selected)
+                              ? ACCOMMODATION_STATE_LABELS[getAccommodationState(selected)]
+                              : "-"}
+                          </strong>
                         </div>
                         <div>
                           <span>Roommate</span>

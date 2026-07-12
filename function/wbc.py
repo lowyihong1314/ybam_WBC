@@ -344,8 +344,41 @@ def review_register_data(record_id):
         })), 400
 
     if action == "accept":
-        record.validfy = True
         message = "审核已通过"
+
+        needs_accommodation_bill = (
+            normalize_version_name(record.version) == KL_DATA_VERSION
+            and (record.registration_group or "") in KL_PAID_GROUPS
+            and record.accommodation_required
+            and not record.accommodation_paid
+            and not record.accommodation_bill_id
+        )
+
+        if needs_accommodation_bill:
+            if not (record.email or "").strip():
+                return jsonify(versioned_payload({
+                    "success": False,
+                    "error": "该报名没有 Email，无法发送住宿付款账单",
+                    "error_type": "accommodation_missing_email"
+                })), 400
+
+            from function.payment_gateway import create_accommodation_bill
+
+            try:
+                bill = create_accommodation_bill(record)
+            except Exception as exc:
+                db.session.rollback()
+                return jsonify(versioned_payload({
+                    "success": False,
+                    "error": f"住宿账单创建失败，审核未生效，请重试：{exc}",
+                    "error_type": "accommodation_bill_failed"
+                })), 502
+
+            record.accommodation_bill_id = bill.get("id")
+            record.accommodation_bill_url = bill.get("url")
+            message = "审核已通过，住宿付款账单已发送至报名者邮箱"
+
+        record.validfy = True
     else:
         record.validfy = False
         message = "审核已拒绝"
@@ -488,13 +521,14 @@ def register():
             payment_amount = 0
 
         # =============================
-        # Monastic hotel accommodation
+        # Hotel accommodation (all groups)
+        # 免费组别只记录需求（工作人员线下对接）；付费组别审核通过后由 Billplz 发住宿账单
         # =============================
         accommodation_required = False
         roommate_name = None
         roommate_doc_no = None
 
-        if public_version == KL_DATA_VERSION and registration_group == "monastic":
+        if public_version == KL_DATA_VERSION:
             accommodation_required = form.get("accommodation_required") == "true"
 
             if accommodation_required:
@@ -505,6 +539,18 @@ def register():
                                 "success": False,
                                 "error": "申请住宿需要填写身份证号码（IC）/ 护照号码",
                                 "error_type": "missing_accommodation_doc_no",
+                            },
+                            version=public_version,
+                        )
+                    ), 400
+
+                if registration_group in KL_PAID_GROUPS and not (form.get("email") or "").strip():
+                    return jsonify(
+                        versioned_payload(
+                            {
+                                "success": False,
+                                "error": "申请住宿需要填写 Email（用于接收 Billplz 住宿付款账单）",
+                                "error_type": "missing_accommodation_email",
                             },
                             version=public_version,
                         )

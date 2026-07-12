@@ -34,6 +34,9 @@ class RegisterData(db.Model):
     accommodation_required = db.Column(db.Boolean, default=False)
     roommate_name = db.Column(db.String(100))
     roommate_doc_no = db.Column(db.String(50))
+    accommodation_paid = db.Column(db.Boolean, default=False)
+    accommodation_bill_id = db.Column(db.String(100))
+    accommodation_bill_url = db.Column(db.String(255))
 
     payment_amount = db.Column(db.Float)
     payment_currency = db.Column(db.String(10))
@@ -97,6 +100,9 @@ class RegisterData(db.Model):
             "accommodation_required": self.accommodation_required,
             "roommate_name": self.roommate_name,
             "roommate_doc_no": self.roommate_doc_no,
+            "accommodation_paid": self.accommodation_paid,
+            "accommodation_bill_id": self.accommodation_bill_id,
+            "accommodation_bill_url": self.accommodation_bill_url,
 
             "payment_amount": self.payment_amount,
             "payment_currency": self.payment_currency,
@@ -138,6 +144,7 @@ class PaymentTransaction(db.Model):
     bill_id = db.Column(db.String(100))
     paid = db.Column(db.Boolean, default=False)
     raw_json = db.Column(db.Text)
+    purpose = db.Column(db.String(30), default="registration")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     version = db.Column(db.String(100), nullable=False, default=DEFAULT_DATA_VERSION)
 
@@ -148,6 +155,7 @@ class PaymentTransaction(db.Model):
             "bill_id": self.bill_id,
             "paid": self.paid,
             "raw_json": json.loads(self.raw_json) if self.raw_json else None,
+            "purpose": self.purpose,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "version": self.version
         }

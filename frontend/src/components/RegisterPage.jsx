@@ -600,7 +600,7 @@ export function RegisterPage({ forcedVersion }) {
         formData.append("medical_information", form.medical_information);
         formData.append("emergency_contact", form.emergency_contact);
 
-        if (form.registration_group === "monastic") {
+        {
           const needsAccommodation = form.accommodation_required === "yes";
           const hasRoommate = needsAccommodation && form.has_roommate === "yes";
           formData.append("accommodation_required", needsAccommodation ? "true" : "false");
@@ -714,7 +714,7 @@ export function RegisterPage({ forcedVersion }) {
   if (version === KL_VERSION) {
     const isFreeGroup = selectedKlGroup.free;
     const isMonastic = form.registration_group === "monastic";
-    const needsAccommodation = isMonastic && form.accommodation_required === "yes";
+    const needsAccommodation = form.accommodation_required === "yes";
     const hasRoommate = needsAccommodation && form.has_roommate === "yes";
     const requiresProjectName = ["creative_presenter", "vendor"].includes(form.registration_group);
     const requiresCreativeHelperDetails = form.registration_group === "creative_presenter";
@@ -930,13 +930,18 @@ export function RegisterPage({ forcedVersion }) {
                   </div>
                 </section>
 
-                {isMonastic ? (
-                  <section className="subsection-card">
+                <section className="subsection-card">
                     <div className="section-heading compact">
                       <h2>酒店住宿安排（Hotel Accommodation）</h2>
-                      <p className="muted-copy">
-                        住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每房 RM280
-                      </p>
+                      {isFreeGroup ? (
+                        <p className="muted-copy">
+                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每房 RM280
+                        </p>
+                      ) : (
+                        <p className="muted-copy">
+                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每人 RM280。报名审核通过后，您将收到 Billplz 住宿付款电邮，请通过邮件中的链接完成付款。
+                        </p>
+                      )}
                     </div>
 
                     <div className="field-grid">
@@ -988,7 +993,7 @@ export function RegisterPage({ forcedVersion }) {
                       ) : null}
                     </div>
 
-                    {needsAccommodation && form.has_roommate === "no" ? (
+                    {needsAccommodation && isFreeGroup && form.has_roommate === "no" ? (
                       <p className="muted-copy">没有指定同房对象者，须自行承担整间房费用 RM280。</p>
                     ) : null}
 
@@ -996,7 +1001,6 @@ export function RegisterPage({ forcedVersion }) {
                       注意事项：酒店住宿申请截止日期为 2026 年 9 月 30 日。若有指定同房对象，仅需其中一位申请住宿并填写双方资料，另一位无需重复申请；双方须自行协调住宿费用，主办单位不负责后续费用分配。住宿费用一经缴付，恕不接受退款。
                     </p>
                   </section>
-                ) : null}
 
                 {requiresProjectName ? (
                   <section className="subsection-card">

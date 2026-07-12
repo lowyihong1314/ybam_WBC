@@ -7,6 +7,11 @@ from models.register_data import DEFAULT_DATA_VERSION
 
 VERSIONED_TABLES = ("register_data", "payment_transaction")
 
+# The revision the legacy additive top-up brings the schema up to. Later
+# migrations must run through Alembic, so legacy databases are stamped here
+# and then upgraded, never stamped at head.
+BASELINE_REVISION = "16a3d158f775"
+
 
 def apply_migrations():
     """Bring the database schema up to date without touching data.
@@ -27,7 +32,8 @@ def apply_migrations():
     if "register_data" in tables:
         db.create_all()
         ensure_version_columns()
-        stamp()
+        stamp(revision=BASELINE_REVISION)
+        upgrade()
         return
 
     upgrade()
