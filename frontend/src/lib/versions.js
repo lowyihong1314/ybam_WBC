@@ -86,7 +86,24 @@ export const versionConfigs = {
     peoplePlaceholder: "吉隆坡场讲者与筹备名单整理中。",
     partnersTitle: "合作单位",
     partnersSubtitle: "主办、协办与媒体单位资料将持续完善。",
-    partners: [],
+    partners: [
+      {
+        name: "YBAM",
+        image: "/kl-assets/ybam-logo.png",
+      },
+      {
+        name: "拉曼大学佛教研究中心",
+        image: "/kl-assets/utar-buddhist-centre.png",
+      },
+      {
+        name: "Eastern Horizon",
+        image: "/kl-assets/eastern-horizon.png",
+      },
+      {
+        name: "星洲日报",
+        image: "/kl-assets/sinchew.jpg",
+      },
+    ],
     footer:
       "主办：马来西亚佛教青年总会（YBAM）｜ 协办：拉曼大学佛教研究中心、马大人间佛教研究中心",
     register: {

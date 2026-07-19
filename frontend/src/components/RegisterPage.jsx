@@ -973,7 +973,7 @@ export function RegisterPage({ forcedVersion }) {
                       <h2>酒店住宿安排（Hotel Accommodation）</h2>
                       {isFreeGroup ? (
                         <p className="muted-copy">
-                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每房 RM280
+                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）
                         </p>
                       ) : (
                         <p className="muted-copy">
@@ -1038,7 +1038,7 @@ export function RegisterPage({ forcedVersion }) {
                     ) : null}
 
                     <p className="muted-copy">
-                      注意事项：酒店住宿申请截止日期为 2026 年 9 月 30 日。若有指定同房对象，仅需其中一位申请住宿并填写双方资料，另一位无需重复申请；双方须自行协调住宿费用，主办单位不负责后续费用分配。住宿费用一经缴付，恕不接受退款。
+                      注意事项：酒店住宿申请截止日期为 2026 年 9 月 30 日。
                     </p>
                   </section>
 
