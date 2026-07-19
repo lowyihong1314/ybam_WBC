@@ -58,9 +58,9 @@ const KL_GROUPS = [
 const KL_PRICE_TABLE = {
   early: {
     local_public: { label: "国内大众", amount: 190, currency: "RM" },
-    foreign_public: { label: "国外大众", amount: 48, currency: "USD" },
-    student: { label: "学生", amount: 75, currency: "RM" },
-    member: { label: "会员团体/大马佛教杂志订户", amount: 140, currency: "RM" },
+    foreign_public: { label: "国外大众", amount: 47.5, currency: "USD" },
+    student: { label: "学生", amount: 76, currency: "RM" },
+    member: { label: "会员团体/大马佛教杂志订户", amount: 142.5, currency: "RM" },
     council: { label: "全国理事", amount: 95, currency: "RM" },
   },
   regular: {
@@ -471,6 +471,11 @@ export function RegisterPage({ forcedVersion }) {
   const klAmount = selectedKlGroup.free
     ? 0
     : Number((klConvertedAmount + klAccommodationFee).toFixed(2));
+  const klRegularPrice = KL_PRICE_TABLE.regular[form.participant_category];
+  const klIsEarlyBird = klPricePhase === "early";
+  const klCategorySaving = Number(
+    (klRegularPrice.amount - klSelectedPrice.amount).toFixed(2),
+  );
 
   useEffect(() => {
     document.documentElement.lang = config.htmlLang;
@@ -802,18 +807,42 @@ export function RegisterPage({ forcedVersion }) {
                           value={form.participant_category}
                           onChange={(event) => updateField("participant_category", event.target.value)}
                         >
-                          {Object.entries(KL_PRICE_TABLE[klPricePhase]).map(([value, item]) => (
-                            <option key={value} value={value}>
-                              {item.label} - {item.currency}{item.amount}
-                            </option>
-                          ))}
+                          {Object.entries(KL_PRICE_TABLE[klPricePhase]).map(([value, item]) => {
+                            const regular = KL_PRICE_TABLE.regular[value];
+                            return (
+                              <option key={value} value={value}>
+                                {klIsEarlyBird
+                                  ? `${item.label} - ${item.currency}${item.amount}（原价 ${regular.currency}${regular.amount}）`
+                                  : `${item.label} - ${item.currency}${item.amount}`}
+                              </option>
+                            );
+                          })}
                         </select>
                       </label>
                     </div>
                     <div className="price-strip price-strip-single">
-                      <div className="price-tile total">
-                        <span>原价</span>
-                        <strong>{klSelectedPrice.currency} {klSelectedPrice.amount}</strong>
+                      <div className={`price-tile total${klIsEarlyBird ? " earlybird" : ""}`}>
+                        {klIsEarlyBird ? (
+                          <>
+                            <span className="earlybird-badge">🔥 早鸟 5% OFF · 8/31 截止</span>
+                            <div className="price-compare">
+                              <s className="price-original">
+                                原价 {klRegularPrice.currency} {klRegularPrice.amount}
+                              </s>
+                              <strong className="price-now">
+                                {klSelectedPrice.currency} {klSelectedPrice.amount}
+                              </strong>
+                            </div>
+                            <small className="price-save">
+                              立省 {klSelectedPrice.currency} {klCategorySaving} · 9/1 起恢复原价
+                            </small>
+                          </>
+                        ) : (
+                          <>
+                            <span>报名费</span>
+                            <strong>{klSelectedPrice.currency} {klSelectedPrice.amount}</strong>
+                          </>
+                        )}
                         {klAccommodationFee > 0 ? (
                           <small>住宿费：RM {klAccommodationFee.toFixed(2)}</small>
                         ) : null}
@@ -973,18 +1002,20 @@ export function RegisterPage({ forcedVersion }) {
                             <span>身份证号码（IC）/ 护照号码（Passport No.）</span>
                             <input required value={form.doc_no} onChange={(event) => updateField("doc_no", event.target.value)} />
                           </label>
-                          <label className="full-row">
-                            <span>是否有指定同房对象？</span>
-                            <select
-                              required
-                              value={form.has_roommate}
-                              onChange={(event) => updateField("has_roommate", event.target.value)}
-                            >
-                              <option value="">请选择</option>
-                              <option value="yes">有</option>
-                              <option value="no">没有</option>
-                            </select>
-                          </label>
+                          {form.registration_group !== "monastic" ? (
+                            <label className="full-row">
+                              <span>是否有指定同房对象？</span>
+                              <select
+                                required
+                                value={form.has_roommate}
+                                onChange={(event) => updateField("has_roommate", event.target.value)}
+                              >
+                                <option value="">请选择</option>
+                                <option value="yes">有</option>
+                                <option value="no">没有</option>
+                              </select>
+                            </label>
+                          ) : null}
                         </>
                       ) : null}
 

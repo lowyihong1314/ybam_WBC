@@ -1440,3 +1440,48 @@ main,
     max-width: 100%;
   }
 }
+
+/* Early-bird discount emphasis (KL registration) */
+.price-tile.earlybird {
+  background: linear-gradient(135deg, #fff4e0 0%, #ffe3e6 100%);
+  border: 1px solid #ffb648;
+  box-shadow: 0 6px 22px rgba(230, 69, 44, 0.16);
+}
+.price-tile .earlybird-badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #e8452c;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.price-compare {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.price-tile .price-original {
+  display: inline-block;
+  margin-bottom: 0;
+  color: #9a9a9a;
+  font-size: 1.05rem;
+  text-decoration: line-through;
+  text-decoration-color: #e8452c;
+  text-decoration-thickness: 2px;
+}
+.price-tile .price-now {
+  color: #d6361f;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.price-tile .price-save {
+  display: block;
+  margin-top: 8px;
+  color: #c0392b;
+  font-weight: 600;
+}

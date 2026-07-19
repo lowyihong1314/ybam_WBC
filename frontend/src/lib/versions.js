@@ -24,7 +24,7 @@ export const versionConfigs = {
     htmlLang: "zh-Hans",
     posterImage: "/static/images/WBC_KL_2026.jpg",
     siteName: "2026 国际佛教当代关怀研讨会",
-    shortName: "吉隆坡研讨会",
+    shortName: "2026国际佛教当代关怀研讨会",
     nav: {
       home: "首页",
       programme: "议程",
@@ -36,7 +36,7 @@ export const versionConfigs = {
     headline: "2026 国际佛教当代关怀研讨会",
     strapline: "新科技时代的佛学教育转型与实践",
     dateLabel: "2026 年 12 月 5 日 至 6 日",
-    locationLabel: "吉隆坡珍珠酒店 The Pearl Kuala Lumpur Hotel（暂定）",
+    locationLabel: "吉隆坡珍珠酒店 The Pearl Kuala Lumpur Hotel",
     audienceLabel: "参会对象：学者、佛教教育工作者、佛团代表及公众",
     description:
       "本活动以中文为主要交流媒介，聚焦 AI、数码传播、沉浸式科技与佛学教育实践，共同探讨在快速变动的时代中，如何持续守住价值、实现身心安定及保持教学深度。",
@@ -86,24 +86,7 @@ export const versionConfigs = {
     peoplePlaceholder: "吉隆坡场讲者与筹备名单整理中。",
     partnersTitle: "合作单位",
     partnersSubtitle: "主办、协办与媒体单位资料将持续完善。",
-    partners: [
-      {
-        name: "YBAM",
-        image: "/kl-assets/ybam-logo.png",
-      },
-      {
-        name: "拉曼大学佛教研究中心",
-        image: "/kl-assets/utar-buddhist-centre.png",
-      },
-      {
-        name: "Eastern Horizon",
-        image: "/kl-assets/eastern-horizon.png",
-      },
-      {
-        name: "星洲日报",
-        image: "/kl-assets/sinchew.jpg",
-      },
-    ],
+    partners: [],
     footer:
       "主办：马来西亚佛教青年总会（YBAM）｜ 协办：拉曼大学佛教研究中心、马大人间佛教研究中心",
     register: {

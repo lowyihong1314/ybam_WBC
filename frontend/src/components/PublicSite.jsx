@@ -232,7 +232,7 @@ export function PublicSite({ forcedVersion }) {
           <div className="split-heading">
             <div className="section-heading">
               <p className="eyebrow">{config.language === "zh" ? "讲者" : "Speakers"}</p>
-              <h2>{config.language === "zh" ? "讲者资料" : "Featured voices"}</h2>
+              <h2>{config.language === "zh" ? "讲师资料" : "Featured voices"}</h2>
             </div>
             <div className="section-heading">
               <p className="eyebrow">{config.language === "zh" ? "委员会" : "Committee"}</p>
@@ -275,13 +275,7 @@ export function PublicSite({ forcedVersion }) {
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="empty-state">
-              {config.language === "zh"
-                ? "合作单位视觉资料整理中。"
-                : "Partner branding will be added to this version later."}
-            </div>
-          )}
+          ) : null}
         </section>
       </main>
 
