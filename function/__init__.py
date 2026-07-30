@@ -48,37 +48,30 @@ def create_app():
     frontend_dist = os.path.join(base_dir, 'frontend', 'dist')
     frontend_index = os.path.join(frontend_dist, 'index.html')
 
-    def has_frontend_dist():
-        return os.path.exists(frontend_index)
-
     def serve_frontend_index():
-        if has_frontend_dist():
-            prefix = request.headers.get('X-Forwarded-Prefix', '').rstrip('/')
-            if not prefix:
-                return send_from_directory(frontend_dist, 'index.html')
+        prefix = request.headers.get('X-Forwarded-Prefix', '').rstrip('/')
+        if not prefix:
+            return send_from_directory(frontend_dist, 'index.html')
 
-            with open(frontend_index, encoding='utf-8') as index_file:
-                html = index_file.read()
+        with open(frontend_index, encoding='utf-8') as index_file:
+            html = index_file.read()
 
-            prefix_base = f'{prefix}/'
-            for base_alias in FRONTEND_BASE_ALIASES:
-                html = html.replace(base_alias, prefix_base)
+        prefix_base = f'{prefix}/'
+        for base_alias in FRONTEND_BASE_ALIASES:
+            html = html.replace(base_alias, prefix_base)
 
-            runtime_config = (
-                '<script>'
-                f'window.__YBAM_BASE_PATH__ = {json.dumps(prefix)};'
-                '</script>'
-            )
-            module_marker = '<script type="module"'
-            if module_marker in html:
-                html = html.replace(module_marker, f'{runtime_config}\n    {module_marker}', 1)
-            else:
-                html = html.replace('</head>', f'    {runtime_config}\n  </head>', 1)
+        runtime_config = (
+            '<script>'
+            f'window.__YBAM_BASE_PATH__ = {json.dumps(prefix)};'
+            '</script>'
+        )
+        module_marker = '<script type="module"'
+        if module_marker in html:
+            html = html.replace(module_marker, f'{runtime_config}\n    {module_marker}', 1)
+        else:
+            html = html.replace('</head>', f'    {runtime_config}\n  </head>', 1)
 
-            return Response(html, mimetype='text/html')
-
-        file_path = os.path.join('static', 'templates', 'index.html')
-        return send_file(file_path)
+        return Response(html, mimetype='text/html')
 
     # 注册普通路由
     @app.route('/')
@@ -88,18 +81,12 @@ def create_app():
     @app.route('/backend')
     @app.route('/backend/')
     def backend():
-        if has_frontend_dist():
-            return serve_frontend_index()
-
-        return send_file('static/templates/register_data.html')
+        return serve_frontend_index()
 
     @app.route('/register')
     @app.route('/register/')
     def register_frontend():
-        if has_frontend_dist():
-            return serve_frontend_index()
-
-        return send_file('static/templates/register.html')
+        return serve_frontend_index()
 
     @app.route('/assets/<path:filename>')
     def frontend_assets(filename):
@@ -114,21 +101,16 @@ def create_app():
         if version in VALID_VERSION_NAMES:
             return serve_frontend_index()
 
-        if has_frontend_dist():
-            candidate = os.path.join(frontend_dist, version)
-            if os.path.isfile(candidate):
-                return send_from_directory(frontend_dist, version)
+        candidate = os.path.join(frontend_dist, version)
+        if os.path.isfile(candidate):
+            return send_from_directory(frontend_dist, version)
 
-        file_path = os.path.join('static', 'templates', 'index.html')
-        return send_file(file_path)
+        return serve_frontend_index()
 
     @app.route('/<version>/register')
     @app.route('/<version>/register/')
     def version_register_site(version):
-        if version in VALID_VERSION_NAMES and has_frontend_dist():
-            return serve_frontend_index()
-
-        return send_file('static/templates/register.html')
+        return serve_frontend_index()
 
     @app.route('/favicon.ico')
     def icon():
@@ -136,11 +118,8 @@ def create_app():
 
     @app.route('/register_data')
     def register_data():
-        if has_frontend_dist():
-            prefix = request.headers.get('X-Forwarded-Prefix', '').rstrip('/')
-            return redirect(f'{prefix}/backend' if prefix else '/backend')
-
-        return send_file('static/templates/register_data.html')
+        prefix = request.headers.get('X-Forwarded-Prefix', '').rstrip('/')
+        return redirect(f'{prefix}/backend' if prefix else '/backend')
 
     # 初始化 socketio
     socketio.init_app(app)
