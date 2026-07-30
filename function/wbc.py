@@ -488,6 +488,35 @@ def register():
             payment_amount = 0
 
         # =============================
+        # Workshop ranking (all groups except vendor)
+        # =============================
+        workshop_rank_1 = workshop_rank_2 = workshop_rank_3 = None
+
+        if public_version == KL_DATA_VERSION and registration_group != "vendor":
+            raw_ranks = {
+                "workshop_rank_1": form.get("workshop_rank_1"),
+                "workshop_rank_2": form.get("workshop_rank_2"),
+                "workshop_rank_3": form.get("workshop_rank_3"),
+            }
+            parsed_ranks = {key: parse_optional_int(value) for key, value in raw_ranks.items()}
+
+            if sorted(parsed_ranks.values(), key=lambda v: (v is None, v)) != [1, 2, 3]:
+                return jsonify(
+                    versioned_payload(
+                        {
+                            "success": False,
+                            "error": "请为三个工作坊完成 1 至 3 排序，且不可重复",
+                            "error_type": "invalid_workshop_ranking",
+                        },
+                        version=public_version,
+                    )
+                ), 400
+
+            workshop_rank_1 = parsed_ranks["workshop_rank_1"]
+            workshop_rank_2 = parsed_ranks["workshop_rank_2"]
+            workshop_rank_3 = parsed_ranks["workshop_rank_3"]
+
+        # =============================
         # Hotel accommodation (all groups)
         # 免费组别只记录需求（工作人员线下对接）；付费组别审核通过后由 Billplz 发住宿账单
         # =============================
@@ -601,6 +630,10 @@ def register():
             accommodation_required=accommodation_required,
             roommate_name=roommate_name,
             roommate_doc_no=roommate_doc_no,
+
+            workshop_rank_1=workshop_rank_1,
+            workshop_rank_2=workshop_rank_2,
+            workshop_rank_3=workshop_rank_3,
 
             payment_amount=payment_amount,
             payment_currency=(form.get("payment_currency") or "RM").upper(),

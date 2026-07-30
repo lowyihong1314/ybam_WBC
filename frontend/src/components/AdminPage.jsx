@@ -798,6 +798,14 @@ export function AdminPage() {
                           <span>Special request</span>
                           <strong>{selected.special_request || "-"}</strong>
                         </div>
+                        <div>
+                          <span>Workshop ranking (1/2/3)</span>
+                          <strong>
+                            {selected.workshop_rank_1 || selected.workshop_rank_2 || selected.workshop_rank_3
+                              ? `工作坊一: ${selected.workshop_rank_1 ?? "-"} / 工作坊二: ${selected.workshop_rank_2 ?? "-"} / 工作坊三: ${selected.workshop_rank_3 ?? "-"}`
+                              : "-"}
+                          </strong>
+                        </div>
                       </div>
                       {selected.helper_names ? <p>{selected.helper_names}</p> : null}
                     </section>

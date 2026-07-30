@@ -45,7 +45,28 @@ const INITIAL_FORM = {
   helper_count: "",
   helper_names: "",
   special_request: "",
+  workshop_rank_1: "",
+  workshop_rank_2: "",
+  workshop_rank_3: "",
 };
+
+const WORKSHOPS = [
+  {
+    field: "workshop_rank_1",
+    title: "工作坊（一）- 桌游 × 游戏化佛学教学实作工作坊",
+    speaker: "宓雄居士团队",
+  },
+  {
+    field: "workshop_rank_2",
+    title: "工作坊（二）- 数码化互动佛学教学 × AI 工具实作工作坊",
+    speaker: "颜俊华老师",
+  },
+  {
+    field: "workshop_rank_3",
+    title: "工作坊（三）- 从坐不住到愿意说：儿童与青少年教学工作坊",
+    speaker: "林添旺老师",
+  },
+];
 
 const KL_GROUPS = [
   { value: "monastic", label: "法师（免费报名）", free: true },
@@ -584,6 +605,15 @@ export function RegisterPage({ forcedVersion }) {
       if (version === KL_VERSION) {
         const formData = new FormData();
         const isFreeGroup = selectedKlGroup.free;
+        const joinsWorkshop = form.registration_group !== "vendor";
+
+        if (joinsWorkshop) {
+          const ranks = [form.workshop_rank_1, form.workshop_rank_2, form.workshop_rank_3];
+          const uniqueRanks = new Set(ranks.filter(Boolean));
+          if (ranks.some((rank) => !rank) || uniqueRanks.size !== 3) {
+            throw new Error("请为三个工作坊完成 1 至 3 排序，且不可重复。");
+          }
+        }
 
         formData.append("version", version);
         formData.append("registration_group", form.registration_group);
@@ -619,6 +649,10 @@ export function RegisterPage({ forcedVersion }) {
           formData.append("roommate_name", hasRoommate ? form.roommate_name.trim() : "");
           formData.append("roommate_doc_no", hasRoommate ? form.roommate_doc_no.trim() : "");
         }
+
+        formData.append("workshop_rank_1", joinsWorkshop ? form.workshop_rank_1 : "");
+        formData.append("workshop_rank_2", joinsWorkshop ? form.workshop_rank_2 : "");
+        formData.append("workshop_rank_3", joinsWorkshop ? form.workshop_rank_3 : "");
 
         if (klNeedsExchange && !exchangeRate) {
           throw new Error("请先点击换算按钮，将 USD 自动换算成 MYR。");
@@ -730,6 +764,7 @@ export function RegisterPage({ forcedVersion }) {
     const requiresProjectName = ["creative_presenter", "vendor"].includes(form.registration_group);
     const requiresCreativeHelperDetails = form.registration_group === "creative_presenter";
     const requiresBoothNotice = ["creative_presenter", "vendor"].includes(form.registration_group);
+    const joinsWorkshop = form.registration_group !== "vendor";
 
     return (
       <div className={`site-shell version-${version}`}>
@@ -972,9 +1007,15 @@ export function RegisterPage({ forcedVersion }) {
                     <div className="section-heading compact">
                       <h2>酒店住宿安排（Hotel Accommodation）</h2>
                       {isFreeGroup ? (
-                        <p className="muted-copy">
-                          住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）
-                        </p>
+                        isMonastic ? (
+                          <p className="muted-copy">
+                            住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜法师住宿全免，无需付费。
+                          </p>
+                        ) : (
+                          <p className="muted-copy">
+                            住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜提醒：三个免费报名组别中，只有法师住宿是全免的，本组别仍须自行负担住宿费用，工作人员将另行联系安排缴费。
+                          </p>
+                        )
                       ) : (
                         <p className="muted-copy">
                           住宿日期：2026 年 12 月 5 日 至 6 日｜房型：Twin Room（双人房）｜住宿费用：每人 RM280。住宿费将与报名费合并，提交报名后一同通过 Billplz 付款。
@@ -1041,6 +1082,44 @@ export function RegisterPage({ forcedVersion }) {
                       注意事项：酒店住宿申请截止日期为 2026 年 9 月 30 日。
                     </p>
                   </section>
+
+                {joinsWorkshop ? (
+                  <section className="subsection-card muted">
+                    <div className="section-heading compact">
+                      <h2>工作坊报名</h2>
+                      <p className="muted-copy">
+                        日期：2026 年 12 月 5 日（星期六）｜时间：3:30pm - 6:30pm｜三个工作坊将同步进行
+                      </p>
+                    </div>
+                    <ul className="dates-list">
+                      {WORKSHOPS.map((workshop) => (
+                        <li key={workshop.field}>
+                          {workshop.title}　讲师：{workshop.speaker}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="muted-copy">
+                      请按心仪程度为工作坊进行 1 至 3 的排序（1 为首选）。备注：因每个工作坊的名额有限，我们将随后另行通知入选参与的工作坊。
+                    </p>
+                    <div className="field-grid">
+                      {WORKSHOPS.map((workshop) => (
+                        <label className="full-row" key={workshop.field}>
+                          <span>{workshop.title}</span>
+                          <select
+                            required
+                            value={form[workshop.field]}
+                            onChange={(event) => updateField(workshop.field, event.target.value)}
+                          >
+                            <option value="">请选择排序</option>
+                            <option value="1">1（首选）</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                          </select>
+                        </label>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
 
                 {requiresProjectName ? (
                   <section className="subsection-card">

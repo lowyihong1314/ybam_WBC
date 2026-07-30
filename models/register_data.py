@@ -38,6 +38,10 @@ class RegisterData(db.Model):
     accommodation_bill_id = db.Column(db.String(100))
     accommodation_bill_url = db.Column(db.String(255))
 
+    workshop_rank_1 = db.Column(db.Integer)
+    workshop_rank_2 = db.Column(db.Integer)
+    workshop_rank_3 = db.Column(db.Integer)
+
     payment_amount = db.Column(db.Float)
     payment_currency = db.Column(db.String(10))
     participant_category = db.Column(db.String(50))
@@ -103,6 +107,10 @@ class RegisterData(db.Model):
             "accommodation_paid": self.accommodation_paid,
             "accommodation_bill_id": self.accommodation_bill_id,
             "accommodation_bill_url": self.accommodation_bill_url,
+
+            "workshop_rank_1": self.workshop_rank_1,
+            "workshop_rank_2": self.workshop_rank_2,
+            "workshop_rank_3": self.workshop_rank_3,
 
             "payment_amount": self.payment_amount,
             "payment_currency": self.payment_currency,
