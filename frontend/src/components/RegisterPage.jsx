@@ -923,6 +923,15 @@ export function RegisterPage({ forcedVersion }) {
                         </button>
                       </div>
                     ) : null}
+
+                    {form.registration_group === "vendor" ? (
+                      <p className="muted-copy">
+                        <strong>填表须知：</strong>
+                        本表格仅供需由主办方准备膳食且有意愿参与研讨会其他流程的摊位协助人员填写。
+                        <br />
+                        若您仅协助摊位且自行准备膳食，则无需填写，仅需由创意教学项目呈现者统一提交姓名即可。
+                      </p>
+                    ) : null}
                   </section>
                 )}
 
