@@ -53,7 +53,7 @@ const INITIAL_FORM = {
 const WORKSHOPS = [
   {
     field: "workshop_rank_1",
-    title: "工作坊（一）- 桌游 × 游戏化佛学教学实作工作坊",
+    title: "工作坊（一）- AI佛教故事漫剧创作",
     speaker: "宓雄居士团队",
   },
   {
