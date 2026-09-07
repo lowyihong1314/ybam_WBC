@@ -105,7 +105,7 @@ export const versionConfigs = {
       },
     ],
     footer:
-      "主办：马来西亚佛教青年总会（YBAM）｜ 协办：拉曼大学佛教研究中心、马大人间佛教研究中心",
+      "主办单位：马来西亚佛教青年总会（YBAM）｜协办单位：拉曼大学佛教研究中心｜媒体伙伴：星洲日报",
     register: {
       title: "报名登记",
       versionLabel: "当前场次：KL",
