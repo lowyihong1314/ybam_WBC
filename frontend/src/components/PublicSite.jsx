@@ -40,6 +40,23 @@ function GuestCards({ items, emptyText, type }) {
   );
 }
 
+function SpeakerGroups({ groups }) {
+  return (
+    <div className="speaker-groups">
+      {groups.map((group) => (
+        <div className="speaker-group" key={group.key}>
+          <div className="speaker-group-heading">
+            <h3>{group.title}</h3>
+            {group.date ? <span className="speaker-group-date">{group.date}</span> : null}
+          </div>
+          {group.subtitle ? <p className="muted-copy">{group.subtitle}</p> : null}
+          <GuestCards items={group.speakers} emptyText="" type={group.key} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Programme({ programme, emptyText }) {
   const day1Items = programme?.day1?.items || [];
   const day2Items = programme?.day2?.items || [];
@@ -244,6 +261,15 @@ export function PublicSite({ forcedVersion }) {
               <div className="empty-state">Loading...</div>
               <div className="empty-state">Loading...</div>
             </div>
+          ) : guestData.speakers.groups?.length ? (
+            <>
+              <SpeakerGroups groups={guestData.speakers.groups} />
+              <GuestCards
+                items={guestData.committee.members || []}
+                emptyText={config.committeePlaceholder || config.peoplePlaceholder}
+                type="committee"
+              />
+            </>
           ) : (
             <div className="dual-columns">
               <GuestCards

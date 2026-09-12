@@ -84,6 +84,7 @@ export const versionConfigs = {
     ],
     programmePlaceholder: "吉隆坡场议程整理中，稍后会在这里更新。",
     peoplePlaceholder: "吉隆坡场讲者与筹备名单整理中。",
+    committeePlaceholder: "筹备团队名单整理中。",
     partnersTitle: "合作单位",
     partnersSubtitle: "主办、协办与媒体单位资料将持续完善。",
     partners: [
