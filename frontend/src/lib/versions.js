@@ -22,7 +22,7 @@ export const versionConfigs = {
     code: KL_VERSION,
     language: "zh",
     htmlLang: "zh-Hans",
-    posterImage: "/kl-assets/宣传总海报.png",
+    posterImage: "/kl-assets/总海报.jpeg",
     siteName: "2026 国际佛教当代关怀研讨会",
     shortName: "2026国际佛教当代关怀研讨会",
     nav: {

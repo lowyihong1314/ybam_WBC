@@ -192,7 +192,7 @@ function buildWorldCountries(dialCodes = {}) {
 }
 
 function getKlPricePhase(now = new Date()) {
-  const earlyBirdEnd = new Date("2026-08-31T23:59:59+08:00");
+  const earlyBirdEnd = new Date("2026-09-30T23:59:59+08:00");
   return now <= earlyBirdEnd ? "early" : "regular";
 }
 
@@ -830,8 +830,8 @@ export function RegisterPage({ forcedVersion }) {
                       <h2>报名费用</h2>
                       <p className="muted-copy">
                         {klPricePhase === "early"
-                          ? "早鸟价优惠：2026-08-31 前报名"
-                          : "普通价：2026-09-01 至 2026-11-14"}
+                          ? "早鸟价优惠：2026-09-30 前报名"
+                          : "普通价：2026-10-01 至 2026-11-14"}
                       </p>
                     </div>
                     <div className="field-grid">
@@ -859,7 +859,7 @@ export function RegisterPage({ forcedVersion }) {
                       <div className={`price-tile total${klIsEarlyBird ? " earlybird" : ""}`}>
                         {klIsEarlyBird ? (
                           <>
-                            <span className="earlybird-badge">🔥 早鸟 5% OFF · 8/31 截止</span>
+                            <span className="earlybird-badge">🔥 早鸟 5% OFF · 9/30 截止</span>
                             <div className="price-compare">
                               <s className="price-original">
                                 原价 {klRegularPrice.currency} {klRegularPrice.amount}
@@ -869,7 +869,7 @@ export function RegisterPage({ forcedVersion }) {
                               </strong>
                             </div>
                             <small className="price-save">
-                              立省 {klSelectedPrice.currency} {klCategorySaving} · 9/1 起恢复原价
+                              立省 {klSelectedPrice.currency} {klCategorySaving} · 10/1 起恢复原价
                             </small>
                           </>
                         ) : (
