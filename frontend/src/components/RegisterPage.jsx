@@ -1035,14 +1035,8 @@ export function RegisterPage({ forcedVersion }) {
                     <div className="field-grid">
                       <label className="full-row">
                         <span>是否需要安排酒店住宿？</span>
-                        <select
-                          required
-                          value={form.accommodation_required}
-                          onChange={(event) => updateField("accommodation_required", event.target.value)}
-                        >
-                          <option value="">请选择</option>
-                          <option value="yes">需要</option>
-                          <option value="no">不需要</option>
+                        <select required value="no" disabled>
+                          <option value="no">住宿申请已截止，暂不开放选择</option>
                         </select>
                       </label>
 
@@ -1088,7 +1082,7 @@ export function RegisterPage({ forcedVersion }) {
                     ) : null}
 
                     <p className="muted-copy">
-                      注意事项：酒店住宿申请截止日期为 2026 年 9 月 30 日。
+                      注意事项：酒店住宿申请已于 2026 年 9 月 30 日截止，如有特殊需求请直接联系主办方。
                     </p>
                   </section>
 
