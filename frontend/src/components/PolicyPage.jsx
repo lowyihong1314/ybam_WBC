@@ -9,7 +9,7 @@ const REFUND_POLICY =
   "All registrations are final and non-refundable; for any exceptional refund request, please contact us via email, cbs@ybam.org.my.";
 
 const TERMS_AND_CONDITIONS =
-  'By registering for the International Contemporary Buddhist Seminar ("the Seminar"), participants acknowledge that the Organisers may make reasonable adjustments to the programme, schedule, speakers, or venue where necessary, and may manage attendance to ensure a safe, respectful, and smooth experience for all. The Organisers may also record or photograph elements of the event for archival or promotional use. Any such decisions will be made with due consideration for participants and the overall integrity of the Conference.';
+  'By registering for the International Contemporary Buddhist Seminar ("the Seminar"), participants acknowledge that the Organisers may make reasonable adjustments to the programme, schedule, speakers, or venue where necessary, and may manage attendance to ensure a safe, respectful, and smooth experience for all. The Organisers may also record or photograph elements of the event for archival or promotional use. Any such decisions will be made with due consideration for participants and the overall integrity of the Seminar.';
 
 function linkContactEmail(text) {
   return text.split(CONTACT_EMAIL).reduce(
