@@ -307,6 +307,11 @@ export function PublicSite({ forcedVersion }) {
 
       <footer className="site-footer">
         <p>{config.footer}</p>
+        <p>
+          <Link to="/terms">Terms &amp; Conditions</Link>
+          {" · "}
+          <Link to="/refund-policy">Refund Policy</Link>
+        </p>
       </footer>
     </div>
   );

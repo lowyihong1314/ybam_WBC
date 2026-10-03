@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { AdminPage } from "./components/AdminPage";
+import { PolicyPage } from "./components/PolicyPage";
 import { PublicSite } from "./components/PublicSite";
 import { RegisterPage } from "./components/RegisterPage";
 import { basePath } from "./lib/basePath";
@@ -13,6 +14,8 @@ export default function App() {
         <Route path="/" element={<PublicSite forcedVersion={DEFAULT_PUBLIC_VERSION} />} />
         <Route path="/register" element={<RegisterPage forcedVersion={DEFAULT_PUBLIC_VERSION} />} />
         <Route path="/backend" element={<AdminPage />} />
+        <Route path="/terms" element={<PolicyPage focus="terms" />} />
+        <Route path="/refund-policy" element={<PolicyPage focus="refund-policy" />} />
         <Route path="/:version/register" element={<RegisterPage />} />
         <Route path="/:version" element={<PublicSite />} />
         <Route path="*" element={<Navigate replace to="/" />} />

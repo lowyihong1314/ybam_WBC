@@ -117,7 +117,7 @@ export const versionConfigs = {
       disclaimerTitle: "报名须知",
       disclaimerText:
         "提交报名资料即表示您理解并同意以下事项：\n1. 主办方可能因场地、流程或讲者安排等因素，对活动内容作出合理调整；\n2. 活动现场影像（含照片、影片等）可用于记录及宣传用途。",
-      disclaimerAgree: "我已阅读并同意以上说明",
+      disclaimerAgree: "我已阅读并同意以上说明、Terms & Conditions 及 Refund Policy",
       conferenceInfoTitle: "活动资讯",
       conferenceInfoTheme: "主题：新科技时代的佛学教育转型与实践",
       conferenceInfoContact: "联系邮箱：wbc@ybam.org.my",
@@ -220,7 +220,7 @@ export const versionConfigs = {
       disclaimerTitle: "Registration notice",
       disclaimerText:
         "By submitting this form, you acknowledge that the organizers may make reasonable programme or logistical adjustments, and that event photography or recording may be used for documentation and promotion.",
-      disclaimerAgree: "I have read and agree to the above notice",
+      disclaimerAgree: "I have read and agree to the above notice, Terms & Conditions and Refund Policy",
       conferenceInfoTitle: "Conference Information",
       conferenceInfoTheme: "Theme: Artificial Intelligence, Buddhism & Buddhist Life",
       conferenceInfoContact: "Contact: wbc@ybam.org.my",

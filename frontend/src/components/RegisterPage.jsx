@@ -16,6 +16,23 @@ import {
   versionConfigs,
 } from "../lib/versions";
 
+const AGREE_POLICY_LINKS = {
+  "Terms & Conditions": "/terms",
+  "Refund Policy": "/refund-policy",
+};
+
+function renderAgreeText(text) {
+  return text.split(/(Terms & Conditions|Refund Policy)/).map((part, index) =>
+    AGREE_POLICY_LINKS[part] ? (
+      <Link key={index} target="_blank" to={AGREE_POLICY_LINKS[part]}>
+        {part}
+      </Link>
+    ) : (
+      part
+    ),
+  );
+}
+
 const INITIAL_FORM = {
   name: "",
   name_cn: "",
@@ -1173,7 +1190,7 @@ export function RegisterPage({ forcedVersion }) {
                   ) : null}
                   <label className="checkbox-row">
                     <input checked={agree} onChange={(event) => setAgree(event.target.checked)} type="checkbox" />
-                    <span>{config.register.disclaimerAgree}</span>
+                    <span>{renderAgreeText(config.register.disclaimerAgree)}</span>
                   </label>
                 </section>
 
@@ -1486,7 +1503,7 @@ export function RegisterPage({ forcedVersion }) {
                     onChange={(e) => setAgree(e.target.checked)}
                     type="checkbox"
                   />
-                  <span>{config.register.disclaimerAgree}</span>
+                  <span>{renderAgreeText(config.register.disclaimerAgree)}</span>
                 </label>
               </section>
 
